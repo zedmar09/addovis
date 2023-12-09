@@ -70,7 +70,7 @@ const VerticalNavHeader = props => {
   const MenuUnlockedIcon = () => userMenuUnlockedIcon || <Icon icon='tabler:circle' />
 
   return (
-    <MenuHeaderWrapper className='nav-header' sx={{ pl: menuHeaderPaddingLeft() }}>
+    <MenuHeaderWrapper className='nav-header' sx={{ pl: menuHeaderPaddingLeft(), zIndex: 9999 }}>
       {userNavMenuBranding ? (
         userNavMenuBranding(props)
       ) : (
@@ -107,7 +107,7 @@ const VerticalNavHeader = props => {
             {themeConfig.templateName}
           </HeaderTitle> */}
 
-          <img src={`/images/addovislogo.webp/`} width={'100%'} height={65.375} alt='Sidebar Logo' />
+          <img src={`/images/addovislogo.webp/`} width={'100%'} height={55.375} alt='Sidebar Logo' />
         </LinkStyled>
       )}
 

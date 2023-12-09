@@ -28,12 +28,12 @@ const themeConfig = {
   horizontalMenuToggle: 'hover' /* click | hover /*! Note: This is for Horizontal navigation menu only */,
   horizontalMenuAnimation: true /* true | false */,
   // ** AppBar Configs
-  appBar: 'fixed' /* fixed | static | hidden /*! Note: hidden value will only work for Vertical Layout */,
-  appBarBlur: true /* true | false */,
+  appBar: 'static' /* fixed | static | hidden /*! Note: hidden value will only work for Vertical Layout */,
+  appBarBlur: false /* true | false */,
   // ** Other Configs
   responsiveFontSizes: false /* true | false */,
   disableRipple: false /* true | false */,
-  disableCustomizer: false /* true | false */,
+  disableCustomizer: true /* true | false */,
   toastPosition: 'top-right' /* top-left | top-center | top-right | bottom-left | bottom-center | bottom-right */
 }
 
