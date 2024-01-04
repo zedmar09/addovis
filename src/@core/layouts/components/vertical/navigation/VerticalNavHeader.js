@@ -107,7 +107,9 @@ const VerticalNavHeader = props => {
             {themeConfig.templateName}
           </HeaderTitle> */}
 
-          <img src={`/images/addovislogo.webp/`} width={'100%'} height={55.375} alt='Sidebar Logo' />
+          {/* <img src={`/images/addovislogo.webp/`} width={'100%'} height={55.375} alt='Sidebar Logo' /> */}
+
+          <img src={`/images/addovislogo.webp/`} width={'100%'} alt='Sidebar Logo' />
         </LinkStyled>
       )}
 

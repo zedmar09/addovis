@@ -109,7 +109,7 @@ const Customizer = () => {
           }}
         >
           <Typography variant='h6' sx={{ fontWeight: 600, textTransform: 'uppercase' }}>
-            Theme Customizer
+            Addovis Theme Customizer
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>Customize & Preview in Real Time</Typography>
           <IconButton
@@ -167,13 +167,13 @@ const Customizer = () => {
             </Box>
 
             {/* Color Picker */}
-            <div>
+            {/* <div>
               <Typography>Primary Color</Typography>
               <Box sx={{ display: 'flex' }}>
                 <ColorBox
                   onClick={() => handleChange('themeColor', 'primary')}
                   sx={{
-                    backgroundColor: '#7367F0',
+                    backgroundColor: '#174e98',
                     ...(themeColor === 'primary'
                       ? { width: 53, height: 53, m: theme => theme.spacing(1.5, 0.75, 0) }
                       : {})
@@ -223,7 +223,7 @@ const Customizer = () => {
                   }}
                 />
               </Box>
-            </div>
+            </div> */}
           </CustomizerSpacing>
 
           <Divider sx={{ m: '0 !important' }} />

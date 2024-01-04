@@ -55,7 +55,7 @@ const LoginV1 = () => {
 
   // ** State
   const [values, setValues] = useState({
-    password: '',
+    password: 'sample',
     showPassword: false
   })
 
@@ -92,6 +92,7 @@ const LoginV1 = () => {
               label='Username'
               sx={{ mb: 4 }}
               placeholder='Enter your Username'
+              value='sample'
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>

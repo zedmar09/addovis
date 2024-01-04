@@ -10,7 +10,22 @@ import Icon from 'src/@core/components/icon'
 const Home = () => {
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12} sx={{ textAlign: 'center', mt: 10, mb: 10 }}>
+      <Grid item xs={12} md={12}>
+        <Card sx={{ borderRadius: 0, textAlign: 'center', backgroundColor: '#184d95' }}>
+          <CardContent>
+            <Icon icon='ph:pill-duotone' fontSize={50} color='#fff' />
+            <Typography variant='h2' sx={{ mb: 2, mt: 2, color: '#fff' }}>
+              Welcome to Addovis
+            </Typography>
+            <Typography variant='subtitle2' sx={{ fontWeight: 350, color: '#fff' }}>
+              Addovis Therapeutics offers a selection of high-quality medication at competitive prices to independent
+              pharmacies in the United States.
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+
+      {/* <Grid item xs={12} sx={{ mt: 10, mb: 10 }}>
         <Typography variant='h2' sx={{ mb: 5 }}>
           Welcome to Addovis 💊
         </Typography>
@@ -18,7 +33,7 @@ const Home = () => {
           Addovis Therapeutics offers a selection of high-quality medication at competitive prices to independent
           pharmacies in the United States.
         </Typography>
-      </Grid>
+      </Grid> */}
 
       <Grid item xs={12} md={12} lg={6}>
         <Card sx={{ borderRadius: 0, textAlign: 'center' }}>
