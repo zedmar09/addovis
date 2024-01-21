@@ -22,3 +22,34 @@ code:not([class*='language-']):after {
 code[class*='language-'] {
   padding: 0;
 }
+
+.MuiFormLabel-asterisk {
+  color: red;
+}
+
+.req-color {
+  color: red;
+}
+
+/*REACT DUAL LIST BOX CUSTOM STYLING*/
+.react-dual-listbox select {
+  min-height: 300px !important;
+}
+.rdl-btn {
+  color: #1452a2 !important;
+}
+
+.permissionCrewHeight select {
+  min-height: 460px !important;
+}
+
+.trans-prodPrice {
+  position: absolute;
+  bottom: 25px;
+  border-radius: 0;
+}
+
+.formLabel {
+  font-size: 13;
+  color: '#5d5a68';
+}

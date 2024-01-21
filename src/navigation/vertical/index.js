@@ -7,35 +7,38 @@ const navigation = () => {
     },
     {
       title: 'Pharmacy',
-      icon: 'ic:twotone-local-pharmacy'
+      icon: 'ic:twotone-local-pharmacy',
+      path: '/pharmacy/all-pharmacy'
     },
     {
       title: 'Manufacturer',
-      icon: 'ic:twotone-factory'
+      icon: 'ic:twotone-factory',
+      path: '/manufacturer/all-manufacturer'
     },
     {
       title: 'Drug',
-      icon: 'ph:pill-duotone'
+      icon: 'ph:pill-duotone',
+      path: '/drug/all-drug'
     },
     {
       title: 'Coupon',
-      icon: 'iconamoon:ticket-duotone'
+      icon: 'iconamoon:ticket-duotone',
+      path: '/coupon/all-coupon'
     },
-    {
-      title: 'Nightly Reports',
-      icon: 'solar:graph-new-bold-duotone'
-    },
+
     {
       title: 'Users',
-      icon: 'ph:users-duotone'
+      icon: 'ph:users-duotone',
+      path: '/users/all-user'
     },
     {
       title: 'Transaction Logs',
-      icon: 'uim:history'
+      icon: 'uim:history',
+      path: '/logs'
     },
     {
-      title: 'Drug Request',
-      icon: 'ic:twotone-message'
+      title: 'Reports',
+      icon: 'solar:chart-bold-duotone'
     }
   ]
 }
