@@ -94,7 +94,7 @@ const AllUser = () => {
                   padding: '8px',
                   flexWrap: 'wrap',
                   justifyContent: 'space-between',
-                  width: '80%',
+                  width: '75%',
                   mt: -1
                 }}
               >

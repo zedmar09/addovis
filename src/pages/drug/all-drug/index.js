@@ -111,7 +111,7 @@ const AllDrug = () => {
                 padding: '8px',
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
-                width: '79%',
+                width: '75%',
                 mt: -1
               }}
             >

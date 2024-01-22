@@ -110,7 +110,6 @@ const TransactionLogs = () => {
                   padding: '8px',
                   flexWrap: 'wrap',
                   justifyContent: 'space-between',
-                  width: '80%',
                   mt: -1
                 }}
               >
