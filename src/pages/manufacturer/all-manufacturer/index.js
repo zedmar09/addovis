@@ -7,6 +7,15 @@ import Grid from '@mui/material/Grid'
 import { Typography } from '@mui/material'
 
 import { useRouter } from 'next/navigation'
+import { styled, useTheme } from '@mui/material/styles'
+
+const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
+  ':hover': {
+    color: 'white',
+    backgroundColor: '#0e3973'
+  },
+  backgroundColor: '#072142'
+}))
 
 const AllManufacturer = () => {
   const { push } = useRouter()
@@ -118,9 +127,9 @@ const AllManufacturer = () => {
                   <Button variant='contained' sx={{ mr: 4 }} color={'secondary'}>
                     Generate Report
                   </Button>
-                  <Button variant='contained' onClick={() => push('/manufacturer/add-manufacturer')}>
+                  <StyledButton variant='contained' onClick={() => push('/manufacturer/add-manufacturer')}>
                     Add Manufacturer
-                  </Button>
+                  </StyledButton>
                 </div>
               </Box>
             </>

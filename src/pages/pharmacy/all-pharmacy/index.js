@@ -57,7 +57,7 @@ const AllPharmacy = () => {
     () => [
       {
         accessorKey: 'name',
-        header: 'Name',
+        header: 'Pharmacy Name',
         Cell: ({ cell, row }) => (
           <div>
             <Typography

@@ -21,7 +21,11 @@ import {
   DialogTitle,
   Dialog,
   IconButton,
-  Divider
+  Divider,
+  Card,
+  CardContent,
+  InputAdornment,
+  Tooltip
 } from '@mui/material'
 
 // ** Custom Components Imports
@@ -57,6 +61,14 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
       color: theme.palette.primary.dark
     }
   }
+}))
+
+const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
+  ':hover': {
+    color: 'white',
+    backgroundColor: '#0e3973'
+  },
+  backgroundColor: '#072142'
 }))
 
 const AddPharmacy = () => {
@@ -140,92 +152,80 @@ const AddPharmacy = () => {
           <Tab value='2' label='Inventory' />
         </TabList>
         <TabPanel value='1'>
-          <Typography variant='h4' sx={{ mb: 0 }}>
-            Pharmacy Profile
-          </Typography>
-
-          <Typography variant='subtitle'>This module allows you to add pharmacy information.</Typography>
-
           <PharmacyProfile />
         </TabPanel>
         <TabPanel value='2'>
-          {/* <Typography variant='h4' sx={{ mb: 0 }}>
-          Pharmacy Inventory
-        </Typography>
-
-        <Typography variant='subtitle'>This module allows you to add drug for pharmacy.</Typography> */}
-
-          {/* <Grid item xs={12} sx={{ textAlign: 'center' }}>
-          <Icon icon='ph:pill-duotone' fontSize={100} />
-          <Typography variant='h4' fontWeight={350}>
-            There are no items currently for this Pharmacy.
-          </Typography>
-          <Typography variant='subtitle' color={'secondary'}>
-            Click the add button to create a new one
-          </Typography>
-          <br /> <br />
-          <Button size='lg' variant='contained'>
-            Add Drug
-          </Button>
-        </Grid> */}
-
-          <MaterialReactTable
-            columns={columns}
-            data={rows}
-            enableStickyHeader
-            enableDensityToggle={false}
-            enableFullScreenToggle={false}
-            enableFilterMatchHighlighting={true}
-            enableHiding={false}
-            initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
-            muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
-            renderTopToolbarCustomActions={({ table }) => (
-              <>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '16px',
-                    padding: '8px',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    width: '79%',
-                    mt: -1
-                  }}
-                >
-                  <Typography variant='h4'>List of Drugs</Typography>
-                  <div>
-                    <Button
-                      variant='contained'
-                      onClick={() => {
-                        handleDrugOpen()
+          <Card sx={{ borderRadius: 0 }}>
+            <CardContent sx={{ p: 0, mt: 7 }}>
+              <MaterialReactTable
+                columns={columns}
+                data={rows}
+                enableStickyHeader
+                enableDensityToggle={false}
+                enableFullScreenToggle={false}
+                enableFilterMatchHighlighting={true}
+                enableHiding={false}
+                initialState={{
+                  density: 'compact',
+                  showGlobalFilter: true,
+                  pagination: { pageSize: 10, pageIndex: 0 }
+                }}
+                muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
+                renderTopToolbarCustomActions={({ table }) => (
+                  <>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        gap: '16px',
+                        padding: '8px',
+                        flexWrap: 'wrap',
+                        justifyContent: 'space-between',
+                        width: '74%',
+                        mt: -1
                       }}
                     >
-                      Add Drug
-                    </Button>
+                      <Typography variant='h4'>List of Drugs</Typography>
+                      <div>
+                        <StyledButton
+                          variant='contained'
+                          onClick={() => {
+                            handleDrugOpen()
+                          }}
+                        >
+                          Add Drug
+                        </StyledButton>
+                      </div>
+                    </Box>
+                  </>
+                )}
+                muiTablePaperProps={{
+                  elevation: 0,
+                  sx: {
+                    borderRadius: '0'
+                  }
+                }}
+                muiTableBodyProps={{
+                  sx: theme => ({
+                    '& tr:nth-of-type(even)': {
+                      backgroundColor: '#fafafa !important'
+                    }
+                  })
+                }}
+                renderBottomToolbarCustomActions={() => (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
+                    <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
+                    {/* Add any additional footer information here */}
                   </div>
-                </Box>
-              </>
-            )}
-            muiTableBodyProps={{
-              sx: theme => ({
-                '& tr:nth-of-type(even)': {
-                  backgroundColor: '#fafafa !important'
-                }
-              })
-            }}
-            renderBottomToolbarCustomActions={() => (
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
-                <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
-                {/* Add any additional footer information here */}
-              </div>
-            )}
-          />
+                )}
+              />
+            </CardContent>
+          </Card>
         </TabPanel>
       </TabContext>
 
       <Dialog open={openDrugDialog} onClose={handleDrugClose} maxWidth='sm' fullWidth={true}>
         <form>
-          <DialogTitle id='alert-dialog-title' sx={{ backgroundColor: '#1452a2' }}>
+          <DialogTitle id='alert-dialog-title' sx={{ backgroundColor: '#072142' }}>
             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant='h5' color={'#fff'} sx={{ mb: 2 }}>
                 Add Drug
@@ -246,7 +246,7 @@ const AddPharmacy = () => {
                   placeholder='Drug Name'
                   label='Drug Name'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setDrugDetails({ ...drugDetails, drug_name: e.target.value })}
                   value={drugDetails.drug_name}
                 />
@@ -261,7 +261,7 @@ const AddPharmacy = () => {
                   placeholder='Quantity'
                   label='Quantity'
                   type='number'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setDrugDetails({ ...drugDetails, quantity: e.target.value })}
                   value={drugDetails.quantity}
                 />
@@ -276,7 +276,7 @@ const AddPharmacy = () => {
                   placeholder='Type'
                   label='Type'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setDrugDetails({ ...drugDetails, type: e.target.value })}
                   value={drugDetails.type}
                 />
@@ -291,7 +291,18 @@ const AddPharmacy = () => {
                   placeholder='In-Stock'
                   label='In-Stock'
                   type='number'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { backgroundColor: '#f5f5f5' } }}
+                  InputProps={{
+                    endAdornment: (
+                      <Tooltip title='Override'>
+                        <InputAdornment position='end'>
+                          <IconButton edge='end'>
+                            <Icon fontSize='1.25rem' icon={'fa:undo'} />
+                          </IconButton>
+                        </InputAdornment>
+                      </Tooltip>
+                    )
+                  }}
                   onChange={e => setDrugDetails({ ...drugDetails, in_stock: e.target.value })}
                   value={drugDetails.in_stock}
                 />
@@ -306,7 +317,7 @@ const AddPharmacy = () => {
                   placeholder='Description'
                   label='Description'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setDrugDetails({ ...drugDetails, description: e.target.value })}
                   value={drugDetails.description}
                   rows={5}
@@ -316,9 +327,9 @@ const AddPharmacy = () => {
             </Grid>
           </DialogContent>
           <DialogActions className='dialog-actions-dense'>
-            <Button variant='contained' type='submit'>
+            <StyledButton variant='contained' type='submit'>
               Confirm
-            </Button>
+            </StyledButton>
           </DialogActions>
         </form>
       </Dialog>
@@ -331,239 +342,254 @@ const PharmacyProfile = () => {
   const [selected, setSelected] = useState([])
   const [selectedState, setSelectedState] = useState([])
 
-  const cbsa = [
-    { value: 'broker-view', label: 'Can View Account' },
-    { value: 'broker-create', label: 'Can Create Account' },
-    { value: 'broker-update', label: 'Can Update Account' },
-    { value: 'broker-reset-password', label: 'Can Reset Password' }
-  ]
-
   return (
     <form>
-      <Grid container spacing={6} sx={{ mt: 5 }}>
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <CustomTextField
-            fullWidth
-            required={true}
-            variant='outlined'
-            size='small'
-            placeholder='Pharmacy Name'
-            label='Pharmacy Name'
-            type='text'
-            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, pharmacy_name: e.target.value })}
-            value={pharmacyInfo.pharmacy_name}
-          />
-        </Grid>
+      <Card sx={{ borderRadius: 0 }}>
+        <CardContent>
+          <Grid container spacing={6}>
+            <Grid item xs={12}>
+              <Typography variant='h4' sx={{ mb: 0 }}>
+                Pharmacy Profile
+              </Typography>
 
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <CustomTextField
-            fullWidth
-            required={true}
-            variant='outlined'
-            size='small'
-            placeholder='Street'
-            label='Street'
-            type='text'
-            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, street: e.target.value })}
-            value={pharmacyInfo.pharmacy_name}
-          />
-        </Grid>
+              <Typography variant='subtitle'>This module allows you to add pharmacy information.</Typography>
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <CustomTextField
-            fullWidth
-            required={true}
-            variant='outlined'
-            size='small'
-            placeholder='NABP'
-            label='NABP'
-            type='text'
-            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, nabp: e.target.value })}
-            value={pharmacyInfo.pharmacy_name}
-          />
-        </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <CustomTextField
+                fullWidth
+                required={true}
+                variant='outlined'
+                size='small'
+                placeholder='Pharmacy Name'
+                label='Pharmacy Name'
+                type='text'
+                inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, pharmacy_name: e.target.value })}
+                value={pharmacyInfo.pharmacy_name}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <CustomTextField
-            fullWidth
-            required={true}
-            variant='outlined'
-            size='small'
-            placeholder='City'
-            label='City'
-            type='text'
-            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, city: e.target.value })}
-            value={pharmacyInfo.city}
-          />
-        </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <CustomTextField
+                fullWidth
+                required={true}
+                variant='outlined'
+                size='small'
+                placeholder='Street'
+                label='Street'
+                type='text'
+                inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, street: e.target.value })}
+                value={pharmacyInfo.pharmacy_name}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <CustomTextField
-            fullWidth
-            required={true}
-            variant='outlined'
-            size='small'
-            placeholder='NPI'
-            label='NPI'
-            type='text'
-            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, npi: e.target.value })}
-            value={pharmacyInfo.npi}
-          />
-        </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <CustomTextField
+                fullWidth
+                required={true}
+                variant='outlined'
+                size='small'
+                placeholder='NABP'
+                label='NABP'
+                type='text'
+                inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, nabp: e.target.value })}
+                value={pharmacyInfo.pharmacy_name}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <CustomTextField
-            fullWidth
-            required={true}
-            variant='outlined'
-            size='small'
-            placeholder='State'
-            label='State'
-            type='text'
-            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, state: e.target.value })}
-            value={pharmacyInfo.state}
-          />
-        </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <CustomTextField
+                fullWidth
+                required={true}
+                variant='outlined'
+                size='small'
+                placeholder='City'
+                label='City'
+                type='text'
+                inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, city: e.target.value })}
+                value={pharmacyInfo.city}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <CustomTextField
-            fullWidth
-            required={true}
-            variant='outlined'
-            size='small'
-            placeholder='Fax Number'
-            label='Fax Number'
-            type='text'
-            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, fax: e.target.value })}
-            value={pharmacyInfo.fax}
-          />
-        </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <CustomTextField
+                fullWidth
+                required={true}
+                variant='outlined'
+                size='small'
+                placeholder='NPI'
+                label='NPI'
+                type='text'
+                inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, npi: e.target.value })}
+                value={pharmacyInfo.npi}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <CustomTextField
-            fullWidth
-            required={true}
-            variant='outlined'
-            size='small'
-            placeholder='Zip Code'
-            label='Zip Code'
-            type='text'
-            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, zip: e.target.value })}
-            value={pharmacyInfo.zip}
-          />
-        </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <CustomTextField
+                fullWidth
+                required={true}
+                variant='outlined'
+                size='small'
+                placeholder='State'
+                label='State'
+                type='text'
+                inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, state: e.target.value })}
+                value={pharmacyInfo.state}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <CustomTextField
-            fullWidth
-            required={true}
-            variant='outlined'
-            size='small'
-            placeholder='Phone Number'
-            label='Phone Number'
-            type='text'
-            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, phone: e.target.value })}
-            value={pharmacyInfo.phone}
-          />
-        </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <CustomTextField
+                fullWidth
+                required={true}
+                variant='outlined'
+                size='small'
+                placeholder='Fax Number'
+                label='Fax Number'
+                type='text'
+                inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, fax: e.target.value })}
+                value={pharmacyInfo.fax}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <FormLabel>
-            Status<span className='req-color'>*</span>
-          </FormLabel>
-          <br />
-          <FormControlLabel
-            control={<Switch checked={pharmacyInfo.active} />}
-            label={pharmacyInfo.active ? 'Active' : 'Inactive'}
-            onChange={e => setPharmacyInfo({ ...pharmacyInfo, active: e.target.checked })}
-          />
-        </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <CustomTextField
+                fullWidth
+                required={true}
+                variant='outlined'
+                size='small'
+                placeholder='Zip Code'
+                label='Zip Code'
+                type='text'
+                inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, zip: e.target.value })}
+                value={pharmacyInfo.zip}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={12}>
-          <Typography variant='h4' sx={{ mb: 0 }}>
-            CBSA (Core-Based Statistical Area)
-          </Typography>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <CustomTextField
+                fullWidth
+                required={true}
+                variant='outlined'
+                size='small'
+                placeholder='Phone Number'
+                label='Phone Number'
+                type='text'
+                inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, phone: e.target.value })}
+                value={pharmacyInfo.phone}
+              />
+            </Grid>
 
-          <Typography variant='subtitle'>
-            Will only show CBSAs that contain a zip code within 200 miles of the Pharmacy zip code
-          </Typography>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <FormLabel>
+                Status<span className='req-color'>*</span>
+              </FormLabel>
+              <br />
+              <FormControlLabel
+                control={<Switch checked={pharmacyInfo.active} />}
+                label={pharmacyInfo.active ? 'Active' : 'Inactive'}
+                onChange={e => setPharmacyInfo({ ...pharmacyInfo, active: e.target.checked })}
+              />
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
 
-          <Box sx={{ mt: 7 }}>
-            <DualListBox
-              options={[
-                { value: 'Ithaca, NY', label: 'Ithaca, NY' },
-                { value: 'Kingston, NY', label: 'Kingston, NY' }
-              ]}
-              preserveSelectOrder
-              selected={selected}
-              onChange={newValue => setSelected(newValue)}
-              className='listTrasfer'
-              canFilter
-              showHeaderLabels
-              showNoOptionsText
-              icons={{
-                moveLeft: '<',
-                moveAllLeft: '<<',
-                moveRight: '>',
-                moveAllRight: '>>'
-              }}
-            />
-          </Box>
-        </Grid>
+      <Card sx={{ mt: 5, borderRadius: 0 }}>
+        <CardContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12}>
+              <Typography variant='h4' sx={{ mb: 0 }}>
+                CBSA (Core-Based Statistical Area)
+              </Typography>
 
-        <Grid item xs={12} sm={12} md={12}></Grid>
+              <Typography variant='subtitle'>
+                Will only show CBSAs that contain a zip code within 200 miles of the Pharmacy zip code
+              </Typography>
 
-        <Grid item xs={12} sm={12} md={12}>
-          <Typography variant='h4' sx={{ mb: 0 }}>
-            State Services
-          </Typography>
+              <Box sx={{ mt: 7 }}>
+                <DualListBox
+                  options={[
+                    { value: 'Ithaca, NY', label: 'Ithaca, NY' },
+                    { value: 'Kingston, NY', label: 'Kingston, NY' }
+                  ]}
+                  preserveSelectOrder
+                  selected={selected}
+                  onChange={newValue => setSelected(newValue)}
+                  className='listTrasfer'
+                  canFilter
+                  showHeaderLabels
+                  showNoOptionsText
+                  icons={{
+                    moveLeft: '<',
+                    moveAllLeft: '<<',
+                    moveRight: '>',
+                    moveAllRight: '>>'
+                  }}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
 
-          <Typography variant='subtitle'>States are preloaded</Typography>
+      <Card sx={{ mt: 5, borderRadius: 0 }}>
+        <CardContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12}>
+              <Typography variant='h4' sx={{ mb: 0 }}>
+                State Services
+              </Typography>
 
-          <Box sx={{ mt: 7 }}>
-            <DualListBox
-              options={[
-                { value: 'California', label: 'California' },
-                { value: 'Nevada', label: 'Nevada' }
-              ]}
-              preserveSelectOrder
-              selected={selected}
-              onChange={newValue => setSelected(newValue)}
-              className='listTrasfer'
-              canFilter
-              showHeaderLabels
-              showNoOptionsText
-              icons={{
-                moveLeft: '<',
-                moveAllLeft: '<<',
-                moveRight: '>',
-                moveAllRight: '>>'
-              }}
-            />
-          </Box>
-        </Grid>
+              <Typography variant='subtitle'>States are preloaded</Typography>
 
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', mt: 5 }}>
-          <div></div>
-          <div>
-            <Button type='submit' variant='contained' size={'lg'} sx={{ mr: 3 }}>
-              Save
-            </Button>
+              <Box sx={{ mt: 7 }}>
+                <DualListBox
+                  options={[
+                    { value: 'California', label: 'California' },
+                    { value: 'Nevada', label: 'Nevada' }
+                  ]}
+                  preserveSelectOrder
+                  selected={selected}
+                  onChange={newValue => setSelected(newValue)}
+                  className='listTrasfer'
+                  canFilter
+                  showHeaderLabels
+                  showNoOptionsText
+                  icons={{
+                    moveLeft: '<',
+                    moveAllLeft: '<<',
+                    moveRight: '>',
+                    moveAllRight: '>>'
+                  }}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
 
-            <Button type='submit' variant='contained' size={'lg'} color={'error'}>
-              Cancel
-            </Button>
-          </div>
-        </Grid>
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', mt: 5 }}>
+        <div></div>
+        <div>
+          <StyledButton type='submit' variant='contained' size={'lg'} sx={{ mr: 3 }}>
+            Save
+          </StyledButton>
+
+          <Button type='submit' variant='contained' size={'lg'} color={'error'}>
+            Cancel
+          </Button>
+        </div>
       </Grid>
     </form>
   )

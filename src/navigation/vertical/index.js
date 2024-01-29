@@ -42,11 +42,13 @@ const navigation = () => {
       children: [
         {
           title: 'Prescription',
-          icon: 'ph:prescription-duotone'
+          icon: 'ph:prescription-duotone',
+          path: '/prescription'
         },
         {
           title: 'Drug Request',
-          icon: 'icon-park-twotone:prescription'
+          icon: 'icon-park-twotone:prescription',
+          path: '/drug-request'
         }
       ]
     }

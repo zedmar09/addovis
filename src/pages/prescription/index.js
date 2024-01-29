@@ -18,107 +18,76 @@ const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
   backgroundColor: '#072142'
 }))
 
-const AllManufacturer = () => {
+const Prescription = () => {
   const { push } = useRouter()
 
   const rows = [
     {
       id: 1,
-      coupon_id: 'AFE4373',
-      manufacturer: 'Johnson & Johnson',
-      drug: 'Acetaminophen',
-      bin: '234567',
-      pcn: '1234567895',
-      group: '126458',
-      active: 'YES'
+      drug_name: 'Paracetamol',
+      prescriber_name: 'John Smith, MD',
+      npi: '123145',
+      pharmacy_name: 'White Pharmacy',
+      time: '11:30 AM'
     },
 
     {
-      id: 2,
-      coupon_id: 'F1F5G6S',
-      manufacturer: 'Pfizer',
-      drug: 'Ibuprofen',
-      bin: '3959298',
-      pcn: '9876543221',
-      group: '624268',
-      active: 'NO'
+      id: 1,
+      drug_name: 'Salbutamol',
+      prescriber_name: 'Mary Jones, DO',
+      npi: '123145',
+      pharmacy_name: 'Red Pharmacy',
+      time: '12:30 PM'
     }
   ]
 
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'coupon_id',
-        header: 'COUPON ID',
+        accessorKey: 'drug_name',
+        header: 'Drug Name',
         Cell: ({ cell, row }) => (
           <div>
-            <Typography
-              sx={{ textTransform: 'capitalize', textDecoration: 'underline' }}
-              color={'primary.main'}
-              fontWeight={450}
-            >
-              {row.original.coupon_id}{' '}
-            </Typography>
+            <Typography sx={{ textTransform: 'capitalize' }}>{row.original.drug_name} </Typography>
+          </div>
+        )
+      },
+
+      {
+        accessorKey: 'prescriber_name',
+        header: 'Prescriber Name',
+        Cell: ({ cell, row }) => (
+          <div>
+            <Typography sx={{ textTransform: 'capitalize' }}>{row.original.prescriber_name} </Typography>
+          </div>
+        )
+      },
+
+      {
+        accessorKey: 'npi',
+        header: 'Prescriber NPI',
+        Cell: ({ cell, row }) => (
+          <div>
+            <Typography sx={{ textTransform: 'capitalize' }}>{row.original.npi} </Typography>
+          </div>
+        )
+      },
+
+      {
+        accessorKey: 'pharmacy_name',
+        header: 'Pharmacy Name',
+        Cell: ({ cell, row }) => (
+          <div>
+            <Typography sx={{ textTransform: 'capitalize' }}>{row.original.pharmacy_name} </Typography>
           </div>
         )
       },
       {
-        accessorKey: 'manufacturer',
-        header: 'manufacturer name',
+        accessorKey: 'time',
+        header: 'Time',
         Cell: ({ cell, row }) => (
           <div>
-            <Typography sx={{ textTransform: 'capitalize' }}>{row.original.manufacturer} </Typography>
-          </div>
-        )
-      },
-      {
-        accessorKey: 'drug',
-        header: 'drug name',
-        Cell: ({ cell, row }) => (
-          <div>
-            <Typography sx={{ textTransform: 'capitalize' }}>{row.original.drug} </Typography>
-          </div>
-        )
-      },
-      {
-        accessorKey: 'bin',
-        header: 'bin',
-        Cell: ({ cell, row }) => (
-          <div>
-            <Typography>{row.original.bin} </Typography>
-          </div>
-        )
-      },
-      {
-        accessorKey: 'pcn',
-        header: 'pcn',
-        Cell: ({ cell, row }) => (
-          <div>
-            <Typography sx={{ textTransform: 'capitalize' }}>{row.original.pcn} </Typography>
-          </div>
-        )
-      },
-      {
-        accessorKey: 'group',
-        header: 'group',
-        Cell: ({ cell, row }) => (
-          <div>
-            <Typography sx={{ textTransform: 'capitalize' }}>{row.original.group} </Typography>
-          </div>
-        )
-      },
-      {
-        accessorKey: 'active',
-        header: 'Is Active',
-        Cell: ({ cell, row }) => (
-          <div>
-            <Typography
-              sx={{ textTransform: 'capitalize' }}
-              color={row.original.active == 'YES' ? 'success.main' : 'error'}
-              fontWeight={500}
-            >
-              {row.original.active}{' '}
-            </Typography>
+            <Typography sx={{ textTransform: 'capitalize' }}>{row.original.time} </Typography>
           </div>
         )
       }
@@ -153,10 +122,10 @@ const AllManufacturer = () => {
                     mt: -1
                   }}
                 >
-                  <Typography variant='h4'>All Coupon</Typography>
+                  <Typography variant='h4'>All Prescription</Typography>
                   <div>
                     <StyledButton variant='contained' onClick={() => push('/coupon/add-coupon')}>
-                      Add Coupon
+                      Generate Report
                     </StyledButton>
                   </div>
                 </Box>
@@ -188,4 +157,4 @@ const AllManufacturer = () => {
   )
 }
 
-export default AllManufacturer
+export default Prescription

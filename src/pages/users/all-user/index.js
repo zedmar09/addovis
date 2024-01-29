@@ -1,12 +1,22 @@
 // ** MUI Imports
 import { useMemo } from 'react'
 import { MaterialReactTable } from 'material-react-table'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Card, CardContent } from '@mui/material'
 
 import Grid from '@mui/material/Grid'
 import { Typography } from '@mui/material'
 
 import { useRouter } from 'next/navigation'
+
+import { styled, useTheme } from '@mui/material/styles'
+
+const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
+  ':hover': {
+    color: 'white',
+    backgroundColor: '#0e3973'
+  },
+  backgroundColor: '#072142'
+}))
 
 const AllUser = () => {
   const { push } = useRouter()
@@ -73,56 +83,64 @@ const AllUser = () => {
   )
 
   return (
-    <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <MaterialReactTable
-          columns={columns}
-          data={rows}
-          enableStickyHeader
-          enableDensityToggle={false}
-          enableFullScreenToggle={false}
-          enableFilterMatchHighlighting={true}
-          enableHiding={false}
-          initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
-          muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
-          renderTopToolbarCustomActions={({ table }) => (
-            <>
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: '16px',
-                  padding: '8px',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between',
-                  width: '75%',
-                  mt: -1
-                }}
-              >
-                <Typography variant='h4'>All User</Typography>
-                <div>
-                  <Button variant='contained' onClick={() => push('/users/add-user')}>
-                    Add User
-                  </Button>
-                </div>
-              </Box>
-            </>
-          )}
-          muiTableBodyProps={{
-            sx: theme => ({
-              '& tr:nth-of-type(even)': {
-                backgroundColor: '#fafafa !important'
+    <Card sx={{ borderRadius: 0, pt: 5 }}>
+      <Grid container spacing={6}>
+        <Grid item xs={12}>
+          <MaterialReactTable
+            columns={columns}
+            data={rows}
+            enableStickyHeader
+            enableDensityToggle={false}
+            enableFullScreenToggle={false}
+            enableFilterMatchHighlighting={true}
+            enableHiding={false}
+            initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
+            muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
+            renderTopToolbarCustomActions={({ table }) => (
+              <>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: '16px',
+                    padding: '8px',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                    width: '75%',
+                    mt: -1
+                  }}
+                >
+                  <Typography variant='h4'>All User</Typography>
+                  <div>
+                    <StyledButton variant='contained' onClick={() => push('/users/add-user')}>
+                      Add User
+                    </StyledButton>
+                  </div>
+                </Box>
+              </>
+            )}
+            muiTablePaperProps={{
+              elevation: 0,
+              sx: {
+                borderRadius: '0'
               }
-            })
-          }}
-          renderBottomToolbarCustomActions={() => (
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
-              <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
-              {/* Add any additional footer information here */}
-            </div>
-          )}
-        />
+            }}
+            muiTableBodyProps={{
+              sx: theme => ({
+                '& tr:nth-of-type(even)': {
+                  backgroundColor: '#fafafa !important'
+                }
+              })
+            }}
+            renderBottomToolbarCustomActions={() => (
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
+                <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
+                {/* Add any additional footer information here */}
+              </div>
+            )}
+          />
+        </Grid>
       </Grid>
-    </Grid>
+    </Card>
   )
 }
 

@@ -20,7 +20,8 @@ import {
   DialogTitle,
   Dialog,
   IconButton,
-  Divider,
+  Card,
+  CardContent,
   InputAdornment,
   Tooltip
 } from '@mui/material'
@@ -44,16 +45,24 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
   },
   '& .Mui-selected': {
     boxShadow: theme.shadows[2],
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.dark,
     color: `${theme.palette.common.white} !important`
   },
   '& .MuiTab-root': {
     lineHeight: 1,
     borderRadius: theme.shape.borderRadius,
     '&:hover': {
-      color: theme.palette.primary.main
+      color: theme.palette.primary.dark
     }
   }
+}))
+
+const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
+  ':hover': {
+    color: 'white',
+    backgroundColor: '#0e3973'
+  },
+  backgroundColor: '#072142'
 }))
 
 const UpdateDrug = () => {
@@ -102,78 +111,65 @@ const DrugInformation = ({ drugDetails, setDrugDetails }) => {
   return (
     <>
       <form>
-        <Grid container spacing={6} sx={{ mb: 4 }}>
-          <Grid item xs={12}>
-            {' '}
-            <Typography variant='h4' sx={{ mb: 0 }}>
-              Information
-            </Typography>
-          </Grid>
+        <Card sx={{ borderRadius: 0 }}>
+          <CardContent>
+            <Grid container spacing={6} sx={{ mb: 4 }}>
+              <Grid item xs={12}>
+                {' '}
+                <Typography variant='h4' sx={{ mb: 0 }}>
+                  Information
+                </Typography>
+              </Grid>
 
-          <Grid item xs={12} sm={12} md={12} lg={6}>
-            <CustomTextField
-              fullWidth
-              required={true}
-              variant='outlined'
-              size='small'
-              placeholder='Drug Name'
-              label='Drug Name'
-              type='text'
-              inputProps={{ style: { textTransform: 'capitalize' } }}
-              onChange={e => setDrugDetails({ ...drugDetails, drug_name: e.target.value })}
-              value={drugDetails.drug_name}
-            />
-          </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={6}>
+                <CustomTextField
+                  fullWidth
+                  required={true}
+                  variant='outlined'
+                  size='small'
+                  placeholder='Drug Name'
+                  label='Drug Name'
+                  type='text'
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                  onChange={e => setDrugDetails({ ...drugDetails, drug_name: e.target.value })}
+                  value={drugDetails.drug_name}
+                />
+              </Grid>
 
-          <Grid item xs={12} sm={12} md={12} lg={6}>
-            <CustomTextField
-              fullWidth
-              required={true}
-              variant='outlined'
-              size='small'
-              placeholder='Type'
-              label='Type'
-              type='text'
-              inputProps={{ style: { textTransform: 'capitalize' } }}
-              onChange={e => setDrugDetails({ ...drugDetails, type: e.target.value })}
-              value={drugDetails.type}
-            />
-          </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={6}>
+                <CustomTextField
+                  fullWidth
+                  required={true}
+                  variant='outlined'
+                  size='small'
+                  placeholder='Type'
+                  label='Type'
+                  type='text'
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                  onChange={e => setDrugDetails({ ...drugDetails, type: e.target.value })}
+                  value={drugDetails.type}
+                />
+              </Grid>
 
-          <Grid item xs={12}>
-            <CustomTextField
-              fullWidth
-              required={true}
-              variant='outlined'
-              size='small'
-              placeholder='Description'
-              label='Description'
-              type='text'
-              inputProps={{ style: { textTransform: 'capitalize' } }}
-              onChange={e => setDrugDetails({ ...drugDetails, description: e.target.value })}
-              value={drugDetails.description}
-              rows={5}
-              multiline
-            />
-          </Grid>
-
-          {/* <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
-            <div></div>
-            <div>
-              <Button type='submit' variant='contained' size={'lg'} sx={{ mr: 2 }}>
-                Save
-              </Button>
-
-              <Button type='submit' variant='contained' size={'lg'} color={'error'} sx={{ mr: 2 }}>
-                Delete
-              </Button>
-
-              <Button type='submit' variant='outlined' size={'lg'} color={'error'}>
-                Back
-              </Button>
-            </div>
-          </Grid> */}
-        </Grid>
+              <Grid item xs={12}>
+                <CustomTextField
+                  fullWidth
+                  required={true}
+                  variant='outlined'
+                  size='small'
+                  placeholder='Description'
+                  label='Description'
+                  type='text'
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                  onChange={e => setDrugDetails({ ...drugDetails, description: e.target.value })}
+                  value={drugDetails.description}
+                  rows={5}
+                  multiline
+                />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
       </form>
     </>
   )
@@ -193,14 +189,16 @@ const Manufacturer = ({ drugDetails, setDrugDetails }) => {
       manufacture: 'Johnson & Johnson',
       ndc: '8673 4325 33',
       quantity: '100',
-      type: 'Capsule'
+      type: 'Capsule',
+      active: 'YES'
     },
     {
       id: 2,
       manufacture: 'Teva Pharmaceuticals',
       ndc: '7654 8755 12',
       quantity: '100',
-      type: 'Capsule'
+      type: 'Capsule',
+      active: 'NO'
     }
   ]
 
@@ -247,6 +245,21 @@ const Manufacturer = ({ drugDetails, setDrugDetails }) => {
             <Typography sx={{ textTransform: 'capitalize' }}>{row.original.type} </Typography>
           </div>
         )
+      },
+      {
+        accessorKey: 'active',
+        header: 'Is Active',
+        Cell: ({ cell, row }) => (
+          <div>
+            <Typography
+              sx={{ textTransform: 'capitalize' }}
+              color={row.original.active == 'YES' ? 'success.main' : 'error'}
+              fontWeight={500}
+            >
+              {row.original.active}{' '}
+            </Typography>
+          </div>
+        )
       }
     ],
     []
@@ -254,59 +267,67 @@ const Manufacturer = ({ drugDetails, setDrugDetails }) => {
 
   return (
     <>
-      <Grid container spacing={6} sx={{ mt: 3 }}>
-        <Grid item xs={12}>
-          <MaterialReactTable
-            columns={columns}
-            data={rows}
-            enableStickyHeader
-            enableDensityToggle={false}
-            enableFullScreenToggle={false}
-            enableFilterMatchHighlighting={true}
-            enableHiding={false}
-            initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
-            muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
-            renderTopToolbarCustomActions={({ table }) => (
-              <>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '16px',
-                    padding: '8px',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    width: '79%',
-                    mt: -1
-                  }}
-                >
-                  <Typography variant='h4'>Manufacturer</Typography>
+      <Card sx={{ borderRadius: 0, mt: 5 }}>
+        <Grid container spacing={6} sx={{ mt: 3 }}>
+          <Grid item xs={12}>
+            <MaterialReactTable
+              columns={columns}
+              data={rows}
+              enableStickyHeader
+              enableDensityToggle={false}
+              enableFullScreenToggle={false}
+              enableFilterMatchHighlighting={true}
+              enableHiding={false}
+              initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
+              muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
+              renderTopToolbarCustomActions={({ table }) => (
+                <>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: '16px',
+                      padding: '8px',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between',
+                      width: '73%',
+                      mt: -1
+                    }}
+                  >
+                    <Typography variant='h4'>Manufacturer</Typography>
 
-                  <Button variant='contained' onClick={handleManufacturerOpen}>
-                    Add Manufacturer
-                  </Button>
-                </Box>
-              </>
-            )}
-            muiTableBodyProps={{
-              sx: theme => ({
-                '& tr:nth-of-type(even)': {
-                  backgroundColor: '#fafafa !important'
+                    <StyledButton variant='contained' onClick={handleManufacturerOpen}>
+                      Add Manufacturer
+                    </StyledButton>
+                  </Box>
+                </>
+              )}
+              muiTablePaperProps={{
+                elevation: 0,
+                sx: {
+                  borderRadius: '0'
                 }
-              })
-            }}
-            renderBottomToolbarCustomActions={() => (
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
-                <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
-                {/* Add any additional footer information here */}
-              </div>
-            )}
-          />
+              }}
+              muiTableBodyProps={{
+                sx: theme => ({
+                  '& tr:nth-of-type(even)': {
+                    backgroundColor: '#fafafa !important'
+                  }
+                })
+              }}
+              renderBottomToolbarCustomActions={() => (
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
+                  <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
+                  {/* Add any additional footer information here */}
+                </div>
+              )}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Card>
 
       <Dialog open={openManufacturerDialog} onClose={handleManufacturerClose} maxWidth='xs' fullWidth={true}>
         <form>
-          <DialogTitle id='alert-dialog-title' sx={{ backgroundColor: '#1452a2' }}>
+          <DialogTitle id='alert-dialog-title' sx={{ backgroundColor: '#072142' }}>
             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant='h5' color={'#fff'} sx={{ mb: 2 }}>
                 Add Manufacturer
@@ -331,7 +352,7 @@ const Manufacturer = ({ drugDetails, setDrugDetails }) => {
                   placeholder='Drug Name'
                   label='Drug Name'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#ededed' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   value={drugDetails.drug_name}
                 />
               </Grid>
@@ -345,7 +366,7 @@ const Manufacturer = ({ drugDetails, setDrugDetails }) => {
                   placeholder='Manufacturer'
                   label='Manufacturer'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setManufacturerInfo({ ...manufacturerInfo, manufacturer: e.target.value })}
                   value={manufacturerInfo.manufacturer}
                 />
@@ -360,7 +381,7 @@ const Manufacturer = ({ drugDetails, setDrugDetails }) => {
                   placeholder='NDC'
                   label='NDC'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setManufacturerInfo({ ...manufacturerInfo, ndc: e.target.value })}
                   value={manufacturerInfo.ndc}
                 />
@@ -375,7 +396,7 @@ const Manufacturer = ({ drugDetails, setDrugDetails }) => {
                   placeholder='30 Day Quantity'
                   label='30 Day Quantity'
                   type='number'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { backgroundColor: '#f5f5f5' } }}
                   onChange={e => setManufacturerInfo({ ...manufacturerInfo, quantity: e.target.value })}
                   value={manufacturerInfo.quantity}
                 />
@@ -390,17 +411,29 @@ const Manufacturer = ({ drugDetails, setDrugDetails }) => {
                   placeholder='Quantity Type'
                   label='Quantity Type'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setManufacturerInfo({ ...manufacturerInfo, quantity_type: e.target.value })}
                   value={manufacturerInfo.quantity_type}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <FormLabel>
+                  Status<span className='req-color'>*</span>
+                </FormLabel>
+                <br />
+                <FormControlLabel
+                  control={<Switch checked={manufacturerInfo.active} />}
+                  label={manufacturerInfo.active ? 'Active' : 'Inactive'}
+                  onChange={e => setManufacturerInfo({ ...manufacturerInfo, active: e.target.checked })}
                 />
               </Grid>
             </Grid>
           </DialogContent>
           <DialogActions className='dialog-actions-dense'>
-            <Button variant='contained' type='submit'>
+            <StyledButton variant='contained' type='submit'>
               Save
-            </Button>
+            </StyledButton>
           </DialogActions>
         </form>
       </Dialog>
@@ -409,25 +442,27 @@ const Manufacturer = ({ drugDetails, setDrugDetails }) => {
 }
 
 const AssociatedDrug = ({ drugDetails, setDrugDetails }) => {
-  //OPEN DRUG DIALOG
-  const [openDrugDialog, setOpenDrugDialog] = useState(false)
-  const handleDrugOpen = () => setOpenDrugDialog(true)
-  const handleDrugClose = () => setOpenDrugDialog(false)
+  //OPEN ASSOCIATE DRUG DIALOG
+  const [openDrugAssociateDialog, setOpenDrugAssociateDialog] = useState(false)
+  const handleDrugAssociateOpen = () => setOpenDrugAssociateDialog(true)
+  const handleDrugAssociateClose = () => setOpenDrugAssociateDialog(false)
 
-  const [drugInfo, setDrugInfo] = useState({})
+  const [drugAssociate, setDrugAssociate] = useState({})
 
   const rows = [
     {
       id: 1,
       drug: 'Tylenol',
       description: 'Reduces fever: associated with colds, flu, or other illnesses',
-      abrated: 'Yes'
+      abrated: 'Yes',
+      active: 'YES'
     },
     {
       id: 2,
       drug: 'Excedrin',
       description: ' Relief for: Headaches, muscle aches, toothaches, menstrual cramps, and fever.',
-      abrated: 'Yes'
+      abrated: 'Yes',
+      active: 'NO'
     }
   ]
 
@@ -465,6 +500,21 @@ const AssociatedDrug = ({ drugDetails, setDrugDetails }) => {
             <Typography sx={{ textTransform: 'capitalize' }}>{row.original.abrated} </Typography>
           </div>
         )
+      },
+      {
+        accessorKey: 'active',
+        header: 'Is Active',
+        Cell: ({ cell, row }) => (
+          <div>
+            <Typography
+              sx={{ textTransform: 'capitalize' }}
+              color={row.original.active == 'YES' ? 'success.main' : 'error'}
+              fontWeight={500}
+            >
+              {row.original.active}{' '}
+            </Typography>
+          </div>
+        )
       }
     ],
     []
@@ -472,64 +522,80 @@ const AssociatedDrug = ({ drugDetails, setDrugDetails }) => {
 
   return (
     <>
-      <Grid container spacing={6} sx={{ mt: 3 }}>
-        <Grid item xs={12}>
-          <MaterialReactTable
-            columns={columns}
-            data={rows}
-            enableStickyHeader
-            enableDensityToggle={false}
-            enableFullScreenToggle={false}
-            enableFilterMatchHighlighting={true}
-            enableHiding={false}
-            initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
-            muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
-            renderTopToolbarCustomActions={({ table }) => (
-              <>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '16px',
-                    padding: '8px',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    width: '79%',
-                    mt: -1
-                  }}
-                >
-                  <Typography variant='h4'>Associated Drugs</Typography>
+      <Card sx={{ borderRadius: 0, mt: 5 }}>
+        <Grid container spacing={6} sx={{ mt: 3 }}>
+          <Grid item xs={12}>
+            <MaterialReactTable
+              columns={columns}
+              data={rows}
+              enableStickyHeader
+              enableDensityToggle={false}
+              enableFullScreenToggle={false}
+              enableFilterMatchHighlighting={true}
+              enableHiding={false}
+              initialState={{
+                density: 'compact',
+                showGlobalFilter: true,
+                pagination: { pageSize: 10, pageIndex: 0 }
+              }}
+              muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
+              renderTopToolbarCustomActions={({ table }) => (
+                <>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: '16px',
+                      padding: '8px',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between',
+                      width: '73%',
+                      mt: -1
+                    }}
+                  >
+                    <Typography variant='h4'>Associated Drugs</Typography>
 
-                  <Button variant='contained' onClick={handleDrugOpen}>
-                    Associate Drug
-                  </Button>
-                </Box>
-              </>
-            )}
-            muiTableBodyProps={{
-              sx: theme => ({
-                '& tr:nth-of-type(even)': {
-                  backgroundColor: '#fafafa !important'
+                    <StyledButton variant='contained' onClick={handleDrugAssociateOpen}>
+                      Associate Drug
+                    </StyledButton>
+                  </Box>
+                </>
+              )}
+              muiTablePaperProps={{
+                elevation: 0,
+                sx: {
+                  borderRadius: '0'
                 }
-              })
-            }}
-            renderBottomToolbarCustomActions={() => (
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
-                <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
-                {/* Add any additional footer information here */}
-              </div>
-            )}
-          />
+              }}
+              muiTableBodyProps={{
+                sx: theme => ({
+                  '& tr:nth-of-type(even)': {
+                    backgroundColor: '#fafafa !important'
+                  }
+                })
+              }}
+              renderBottomToolbarCustomActions={() => (
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
+                  <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
+                  {/* Add any additional footer information here */}
+                </div>
+              )}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Card>
 
-      <Dialog open={openDrugDialog} onClose={handleDrugClose} maxWidth='xs' fullWidth={true}>
+      <Dialog open={openDrugAssociateDialog} onClose={handleDrugAssociateClose} maxWidth='xs' fullWidth={true}>
         <form>
-          <DialogTitle id='alert-dialog-title' sx={{ backgroundColor: '#1452a2' }}>
+          <DialogTitle id='alert-dialog-title' sx={{ backgroundColor: '#072142' }}>
             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant='h5' color={'#fff'} sx={{ mb: 2 }}>
                 Associate Drug
               </Typography>
-              <IconButton aria-label='capture screenshot' sx={{ mt: -4, color: '#fff' }} onClick={handleDrugClose}>
+              <IconButton
+                aria-label='capture screenshot'
+                sx={{ mt: -4, color: '#fff' }}
+                onClick={handleDrugAssociateClose}
+              >
                 <Icon icon='bx:x' />
               </IconButton>
             </Grid>
@@ -545,8 +611,9 @@ const AssociatedDrug = ({ drugDetails, setDrugDetails }) => {
                   placeholder='Generic Brand'
                   label='Generic Brand'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#ededed' } }}
-                  value={drugDetails.drug_name}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#ddd' } }}
+                  value={'Acetaminophen'}
+                  disabled
                 />
               </Grid>
 
@@ -556,32 +623,44 @@ const AssociatedDrug = ({ drugDetails, setDrugDetails }) => {
                   required={true}
                   variant='outlined'
                   size='small'
-                  placeholder='Manufacturer'
-                  label='Manufacturer'
+                  placeholder='Branded Drug'
+                  label='Branded Drug'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
-                  onChange={e => setDrugInfo({ ...drugInfo, branded: e.target.value })}
-                  value={drugInfo.branded}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                  onChange={e => setDrugAssociate({ ...drugAssociate, branded: e.target.value })}
+                  value={drugAssociate.branded}
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <FormLabel>
                   AB Rated<span className='req-color'>*</span>
                 </FormLabel>
                 <br />
                 <FormControlLabel
-                  control={<Switch checked={drugInfo.abrated} />}
-                  label={drugInfo.abrated ? 'Yes' : 'No'}
-                  onChange={e => setDrugInfo({ ...drugInfo, abrated: e.target.checked })}
+                  control={<Switch checked={drugAssociate.abrated} />}
+                  label={drugAssociate.abrated ? 'Yes' : 'No'}
+                  onChange={e => setDrugAssociate({ ...drugAssociate, abrated: e.target.checked })}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <FormLabel>
+                  Status<span className='req-color'>*</span>
+                </FormLabel>
+                <br />
+                <FormControlLabel
+                  control={<Switch checked={drugAssociate.active} />}
+                  label={drugAssociate.active ? 'Active' : 'Inactive'}
+                  onChange={e => setDrugAssociate({ ...drugAssociate, active: e.target.checked })}
                 />
               </Grid>
             </Grid>
           </DialogContent>
           <DialogActions className='dialog-actions-dense'>
-            <Button variant='contained' type='submit'>
+            <StyledButton variant='contained' type='submit'>
               Save
-            </Button>
+            </StyledButton>
           </DialogActions>
         </form>
       </Dialog>
@@ -664,59 +743,67 @@ const PharmacyStock = () => {
 
   return (
     <>
-      <Grid container spacing={6}>
-        <Grid item xs={12}>
-          <MaterialReactTable
-            columns={columns}
-            data={rows}
-            enableStickyHeader
-            enableDensityToggle={false}
-            enableFullScreenToggle={false}
-            enableFilterMatchHighlighting={true}
-            enableHiding={false}
-            initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
-            muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
-            renderTopToolbarCustomActions={({ table }) => (
-              <>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '16px',
-                    padding: '8px',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    width: '79%',
-                    mt: -1
-                  }}
-                >
-                  <Typography variant='h4'>Pharmacy Stock</Typography>
+      <Card sx={{ borderRadius: 0, pt: 5 }}>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <MaterialReactTable
+              columns={columns}
+              data={rows}
+              enableStickyHeader
+              enableDensityToggle={false}
+              enableFullScreenToggle={false}
+              enableFilterMatchHighlighting={true}
+              enableHiding={false}
+              initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
+              muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
+              renderTopToolbarCustomActions={({ table }) => (
+                <>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: '16px',
+                      padding: '8px',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between',
+                      width: '74%',
+                      mt: -1
+                    }}
+                  >
+                    <Typography variant='h4'>Pharmacy Stock</Typography>
 
-                  <Button variant='contained' onClick={handlePharmacyOpen}>
-                    Add Pharmacy
-                  </Button>
-                </Box>
-              </>
-            )}
-            muiTableBodyProps={{
-              sx: theme => ({
-                '& tr:nth-of-type(even)': {
-                  backgroundColor: '#fafafa !important'
+                    <StyledButton variant='contained' onClick={handlePharmacyOpen}>
+                      Add Pharmacy
+                    </StyledButton>
+                  </Box>
+                </>
+              )}
+              muiTablePaperProps={{
+                elevation: 0,
+                sx: {
+                  borderRadius: '0'
                 }
-              })
-            }}
-            renderBottomToolbarCustomActions={() => (
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
-                <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
-                {/* Add any additional footer information here */}
-              </div>
-            )}
-          />
+              }}
+              muiTableBodyProps={{
+                sx: theme => ({
+                  '& tr:nth-of-type(even)': {
+                    backgroundColor: '#fafafa !important'
+                  }
+                })
+              }}
+              renderBottomToolbarCustomActions={() => (
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
+                  <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
+                  {/* Add any additional footer information here */}
+                </div>
+              )}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Card>
 
       <Dialog open={openPharmacyDialog} onClose={handlePharmacyClose} maxWidth='xs' fullWidth={true}>
         <form>
-          <DialogTitle id='alert-dialog-title' sx={{ backgroundColor: '#1452a2' }}>
+          <DialogTitle id='alert-dialog-title' sx={{ backgroundColor: '#072142' }}>
             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant='h5' color={'#fff'} sx={{ mb: 2 }}>
                 Add Pharmacy
@@ -737,7 +824,7 @@ const PharmacyStock = () => {
                   placeholder='Pharmacy'
                   label='Pharmacy'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setPharmacyInfo({ ...pharmacyInfo, pharmacy_name: e.target.value })}
                   value={pharmacyInfo.pharmacy_name}
                 />
@@ -752,7 +839,7 @@ const PharmacyStock = () => {
                   placeholder='City'
                   label='City'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setPharmacyInfo({ ...pharmacyInfo, city: e.target.value })}
                   value={pharmacyInfo.city}
                 />
@@ -767,7 +854,7 @@ const PharmacyStock = () => {
                   placeholder='State'
                   label='State'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setPharmacyInfo({ ...pharmacyInfo, state: e.target.value })}
                   value={pharmacyInfo.state}
                 />
@@ -781,8 +868,8 @@ const PharmacyStock = () => {
                   size='small'
                   placeholder='Quantity'
                   label='Quantity'
-                  type='text'
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  type='number'
+                  inputProps={{ style: { backgroundColor: '#f5f5f5' } }}
                   onChange={e => setPharmacyInfo({ ...pharmacyInfo, quantity: e.target.value })}
                   value={pharmacyInfo.quantity}
                 />
@@ -796,6 +883,7 @@ const PharmacyStock = () => {
                   size='small'
                   placeholder='In-Stock'
                   label='In-Stock'
+                  inputProps={{ style: { backgroundColor: '#f5f5f5' } }}
                   type='number'
                   InputProps={{
                     endAdornment: (
@@ -815,9 +903,9 @@ const PharmacyStock = () => {
             </Grid>
           </DialogContent>
           <DialogActions className='dialog-actions-dense'>
-            <Button variant='contained' type='submit'>
+            <StyledButton variant='contained' type='submit'>
               Save
-            </Button>
+            </StyledButton>
           </DialogActions>
         </form>
       </Dialog>
@@ -962,39 +1050,47 @@ const PharmacyMetrics = () => {
 
   return (
     <>
-      <Grid container spacing={6}>
-        <Grid item xs={12}>
-          <MaterialReactTable
-            columns={columns}
-            data={rows}
-            enableStickyHeader
-            enableDensityToggle={false}
-            enableFullScreenToggle={false}
-            enableFilterMatchHighlighting={true}
-            enableHiding={false}
-            initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
-            muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
-            renderTopToolbarCustomActions={({ table }) => (
-              <Box sx={{ padding: 2 }}>
-                <Typography variant='h4'>Pharmacy Metrics</Typography>
-              </Box>
-            )}
-            muiTableBodyProps={{
-              sx: theme => ({
-                '& tr:nth-of-type(even)': {
-                  backgroundColor: '#fafafa !important'
+      <Card sx={{ borderRadius: 0, pt: 5 }}>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <MaterialReactTable
+              columns={columns}
+              data={rows}
+              enableStickyHeader
+              enableDensityToggle={false}
+              enableFullScreenToggle={false}
+              enableFilterMatchHighlighting={true}
+              enableHiding={false}
+              initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
+              muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
+              renderTopToolbarCustomActions={({ table }) => (
+                <Box sx={{ padding: 2 }}>
+                  <Typography variant='h4'>Pharmacy Metrics</Typography>
+                </Box>
+              )}
+              muiTablePaperProps={{
+                elevation: 0,
+                sx: {
+                  borderRadius: '0'
                 }
-              })
-            }}
-            renderBottomToolbarCustomActions={() => (
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
-                <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
-                {/* Add any additional footer information here */}
-              </div>
-            )}
-          />
+              }}
+              muiTableBodyProps={{
+                sx: theme => ({
+                  '& tr:nth-of-type(even)': {
+                    backgroundColor: '#fafafa !important'
+                  }
+                })
+              }}
+              renderBottomToolbarCustomActions={() => (
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
+                  <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
+                  {/* Add any additional footer information here */}
+                </div>
+              )}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Card>
     </>
   )
 }
