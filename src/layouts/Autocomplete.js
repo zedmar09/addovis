@@ -418,6 +418,9 @@ const AutocompleteComponent = ({ hidden, settings }) => {
         {!hidden && layout === 'vertical' ? (
           <Typography sx={{ userSelect: 'none', color: 'text.disabled' }}>Search for anything here..</Typography>
         ) : null}
+
+        {/* noOptionsText={<NoResult value={searchValue} setOpenDialog={setOpenDialog} />} */}
+
         {openDialog && (
           <Dialog fullWidth open={openDialog} fullScreen={fullScreenDialog} onClose={() => setOpenDialog(false)}>
             <Box sx={{ top: 0, width: '100%', position: 'sticky' }}>
@@ -429,7 +432,6 @@ const AutocompleteComponent = ({ hidden, settings }) => {
                 isOptionEqualToValue={() => true}
                 onInputChange={(event, value) => setSearchValue(value)}
                 onChange={(event, obj) => handleOptionClick(obj)}
-                // noOptionsText={<NoResult value={searchValue} setOpenDialog={setOpenDialog} />}
                 getOptionLabel={option => option.title || ''}
                 groupBy={option => (searchValue.length ? categoryTitle[option.category] : '')}
                 sx={{
