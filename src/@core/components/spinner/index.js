@@ -50,7 +50,7 @@ const FallbackSpinner = ({ sx }) => {
 
       {/* <img src={`/images/addovislogo.webp/`} width={160} height={100.375} alt='Sidebar Logo' /> */}
 
-      <img src={`/images/addovislogo.webp/`} width={160} alt='Sidebar Logo' />
+      <img src={`/images/addovislogo.webp/`} width={160} alt='Sidebar Logo' style={{ filter: 'grayscale(90%)' }} />
     </Box>
   )
 }

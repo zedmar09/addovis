@@ -17,9 +17,9 @@ const UserThemeOptions = () => {
   return {
     palette: {
       primary: {
-        light: '#1c77ed',
-        main: '#1452a2',
-        dark: '#071e3d',
+        light: '#072142',
+        main: '#1452A1',
+        dark: '#0B0D1F',
         contrastText: '#FFF'
       }
     },
@@ -111,10 +111,11 @@ const UserThemeOptions = () => {
     shape: {
       borderRadius: 8
     },
-    typography: {
-      fontFamily:
-        '"Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"'
-    },
+
+    // typography: {
+    //   fontFamily:
+    //     '"Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"'
+    // },
     shadows:
       mode === 'light'
         ? [

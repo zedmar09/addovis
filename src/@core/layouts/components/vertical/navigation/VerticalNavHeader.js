@@ -109,11 +109,16 @@ const VerticalNavHeader = props => {
 
           {/* <img src={`/images/addovislogo.webp/`} width={'100%'} height={55.375} alt='Sidebar Logo' /> */}
 
-          <img src={`/images/addovislogo.webp/`} width={'100%'} alt='Sidebar Logo' />
+          <img
+            src={`/images/addovislogo.webp/`}
+            width={'100%'}
+            alt='Sidebar Logo'
+            style={{ filter: 'grayscale(90%)' }}
+          />
         </LinkStyled>
       )}
 
-      {hidden ? (
+      {/* {hidden ? (
         <IconButton
           disableRipple
           disableFocusRipple
@@ -140,7 +145,7 @@ const VerticalNavHeader = props => {
         >
           {navCollapsed ? MenuUnlockedIcon() : MenuLockedIcon()}
         </IconButton>
-      )}
+      )} */}
     </MenuHeaderWrapper>
   )
 }

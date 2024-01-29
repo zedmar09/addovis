@@ -15,7 +15,7 @@ import CardContent from '@mui/material/CardContent'
 import { styled, useTheme } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
-import MuiFormControlLabel from '@mui/material/FormControlLabel'
+import FormControlLabel from '@mui/material/FormControlLabel'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -39,15 +39,16 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }))
 
 const LinkStyled = styled(Link)(({ theme }) => ({
-  textDecoration: 'none',
-  color: `${theme.palette.primary.main} !important`
+  textDecoration: 'underline',
+  color: `${theme.palette.primary.light} !important`
 }))
 
 const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
   ':hover': {
     color: 'white',
     backgroundColor: '#0e3973'
-  }
+  },
+  backgroundColor: '#072142'
 }))
 
 const LoginV1 = () => {
@@ -72,16 +73,25 @@ const LoginV1 = () => {
 
   const onSubmit = e => {
     e.preventDefault()
-    router.push('/home')
+    router.push('/dashboard')
   }
 
   return (
-    <Box className='content-center' sx={{ backgroundColor: '#1452a2' }}>
-      <Card>
+    <Box className='content-center' sx={{ backgroundColor: '#072142' }}>
+      <Card elevation={1}>
         <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src='/images/addovislogo.webp' alt='Addovis Logo' width={'100%'} />
+            <img
+              src='/images/addovislogo.webp'
+              alt='Addovis Logo'
+              width={'100%'}
+              style={{ filter: 'grayscale(90%)' }}
+            />
           </Box>
+
+          <Typography color={'primary.light'} variant='h3' sx={{ mb: 5 }}>
+            Sign In
+          </Typography>
 
           <form autoComplete='off' onSubmit={onSubmit}>
             <CustomTextField
@@ -141,6 +151,11 @@ const LoginV1 = () => {
                 justifyContent: 'space-between'
               }}
             >
+              <FormControlLabel
+                color='primary.dark'
+                label={<Typography color='primary.dark'>Remember Me</Typography>}
+                control={<Checkbox />}
+              />
               <Typography component={LinkStyled} href='/pages/auth/forgot-password-v1'>
                 Forgot Password?
               </Typography>

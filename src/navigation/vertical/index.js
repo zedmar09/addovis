@@ -1,9 +1,9 @@
 const navigation = () => {
   return [
     {
-      title: 'Home',
-      path: '/home',
-      icon: 'ic:twotone-home'
+      title: 'Dashboard',
+      path: '/dashboard',
+      icon: 'ic:twotone-dashboard'
     },
     {
       title: 'Pharmacy',
@@ -38,7 +38,17 @@ const navigation = () => {
     },
     {
       title: 'Reports',
-      icon: 'solar:chart-bold-duotone'
+      icon: 'solar:chart-bold-duotone',
+      children: [
+        {
+          title: 'Prescription',
+          icon: 'ph:prescription-duotone'
+        },
+        {
+          title: 'Drug Request',
+          icon: 'icon-park-twotone:prescription'
+        }
+      ]
     }
   ]
 }

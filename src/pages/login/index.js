@@ -76,11 +76,16 @@ const LoginV1 = () => {
   }
 
   return (
-    <Box className='content-center' sx={{ backgroundColor: '#1452a2' }}>
+    <Box className='content-center'>
       <Card>
         <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src='/images/addovislogo.webp' alt='Addovis Logo' width={'100%'} />
+            <img
+              src='/images/addovislogo.webp'
+              alt='Addovis Logo'
+              width={'100%'}
+              style={{ filter: 'grayscale(90%)' }}
+            />
           </Box>
 
           <form autoComplete='off' onSubmit={onSubmit}>

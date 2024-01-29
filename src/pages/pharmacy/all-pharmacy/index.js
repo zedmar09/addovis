@@ -4,7 +4,7 @@ import { MaterialReactTable } from 'material-react-table'
 import { Box, Button } from '@mui/material'
 
 import Grid from '@mui/material/Grid'
-import { Typography } from '@mui/material'
+import { Typography, Card, CardContent } from '@mui/material'
 
 import { useRouter } from 'next/navigation'
 
@@ -128,55 +128,65 @@ const AllPharmacy = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <MaterialReactTable
-          columns={columns}
-          data={rows}
-          enableStickyHeader
-          enableDensityToggle={false}
-          enableFullScreenToggle={false}
-          enableFilterMatchHighlighting={true}
-          enableHiding={false}
-          initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
-          muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
-          renderTopToolbarCustomActions={({ table }) => (
-            <>
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: '16px',
-                  padding: '8px',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between',
-                  width: '75%',
-                  mt: -1
-                }}
-              >
-                <Typography variant='h4'>All Pharmacy</Typography>
-                <div>
-                  <Button variant='contained' sx={{ mr: 4 }} color={'secondary'}>
-                    Generate Report
-                  </Button>
-                  <Button variant='contained' onClick={() => push('/pharmacy/add-pharmacy')}>
-                    Add Pharmacy
-                  </Button>
+        <Card sx={{ borderRadius: 0 }}>
+          <CardContent sx={{ p: 0, mt: 7 }}>
+            <MaterialReactTable
+              columns={columns}
+              data={rows}
+              enableStickyHeader
+              enableDensityToggle={false}
+              enableFullScreenToggle={false}
+              enableFilterMatchHighlighting={true}
+              enableHiding={false}
+              initialState={{ density: 'compact', showGlobalFilter: true, pagination: { pageSize: 10, pageIndex: 0 } }}
+              muiTableContainerProps={{ sx: { backgroundColor: '#000' } }}
+              muiTablePaperProps={{
+                elevation: 0,
+                sx: {
+                  borderRadius: '0'
+                }
+              }}
+              renderTopToolbarCustomActions={({ table }) => (
+                <>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: '16px',
+                      padding: '8px',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between',
+                      width: '75%',
+                      mt: -1
+                    }}
+                  >
+                    <Typography variant='h4'>All Pharmacy</Typography>
+                    <div>
+                      <Button variant='contained' sx={{ mr: 4 }} color={'secondary'}>
+                        Generate Report
+                      </Button>
+                      <Button variant='contained' onClick={() => push('/pharmacy/add-pharmacy')}>
+                        Add Pharmacy
+                      </Button>
+                    </div>
+                  </Box>
+                </>
+              )}
+              muiTableBodyProps={{
+                sx: theme => ({
+                  '& tr:nth-of-type(even)': {
+                    backgroundColor: '#fafafa !important'
+                  }
+                })
+              }}
+              renderBottomToolbarCustomActions={() => (
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
+                  <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
+                  {/* Add any additional footer information here */}
                 </div>
-              </Box>
-            </>
-          )}
-          muiTableBodyProps={{
-            sx: theme => ({
-              '& tr:nth-of-type(even)': {
-                backgroundColor: '#fafafa !important'
-              }
-            })
-          }}
-          renderBottomToolbarCustomActions={() => (
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px' }}>
-              <Typography>{`Showing 1 to ${Math.min(rows.length, 10)} of ${rows.length} entries`}</Typography>
-              {/* Add any additional footer information here */}
-            </div>
-          )}
-        />
+              )}
+            />
+          </CardContent>
+        </Card>
       </Grid>
     </Grid>
   )
