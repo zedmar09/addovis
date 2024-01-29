@@ -5,8 +5,17 @@ import { Box, Button } from '@mui/material'
 
 import Grid from '@mui/material/Grid'
 import { Typography, Card, CardContent } from '@mui/material'
+import { styled, useTheme } from '@mui/material/styles'
 
 import { useRouter } from 'next/navigation'
+
+const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
+  ':hover': {
+    color: 'white',
+    backgroundColor: '#0e3973'
+  },
+  backgroundColor: '#072142'
+}))
 
 const AllPharmacy = () => {
   const { push } = useRouter()
@@ -164,9 +173,9 @@ const AllPharmacy = () => {
                       <Button variant='contained' sx={{ mr: 4 }} color={'secondary'}>
                         Generate Report
                       </Button>
-                      <Button variant='contained' onClick={() => push('/pharmacy/add-pharmacy')}>
+                      <StyledButton variant='contained' onClick={() => push('/pharmacy/add-pharmacy')}>
                         Add Pharmacy
-                      </Button>
+                      </StyledButton>
                     </div>
                   </Box>
                 </>

@@ -1,5 +1,6 @@
 // ** React Imports
 import { useMemo, useState } from 'react'
+import dynamic from 'next/dynamic'
 
 // ** MUI Imports
 import TabPanel from '@mui/lab/TabPanel'
@@ -19,7 +20,8 @@ import {
   DialogContent,
   DialogTitle,
   Dialog,
-  IconButton
+  IconButton,
+  Divider
 } from '@mui/material'
 
 // ** Custom Components Imports
@@ -27,6 +29,10 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import Icon from 'src/@core/components/icon'
 import { MaterialReactTable } from 'material-react-table'
+
+import 'react-dual-listbox/lib/react-dual-listbox.css'
+
+const DualListBox = dynamic(() => import('react-dual-listbox'), { ssr: false })
 
 // Styled TabList component
 const TabList = styled(MuiTabList)(({ theme }) => ({
@@ -41,14 +47,14 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
   },
   '& .Mui-selected': {
     boxShadow: theme.shadows[2],
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.dark,
     color: `${theme.palette.common.white} !important`
   },
   '& .MuiTab-root': {
     lineHeight: 1,
     borderRadius: theme.shape.borderRadius,
     '&:hover': {
-      color: theme.palette.primary.main
+      color: theme.palette.primary.dark
     }
   }
 }))
@@ -322,6 +328,8 @@ const AddPharmacy = () => {
 
 const PharmacyProfile = () => {
   const [pharmacyInfo, setPharmacyInfo] = useState({})
+  const [selected, setSelected] = useState([])
+  const [selectedState, setSelectedState] = useState([])
 
   const cbsa = [
     { value: 'broker-view', label: 'Can View Account' },
@@ -342,7 +350,7 @@ const PharmacyProfile = () => {
             placeholder='Pharmacy Name'
             label='Pharmacy Name'
             type='text'
-            inputProps={{ style: { textTransform: 'capitalize' } }}
+            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
             onChange={e => setPharmacyInfo({ ...pharmacyInfo, pharmacy_name: e.target.value })}
             value={pharmacyInfo.pharmacy_name}
           />
@@ -357,7 +365,7 @@ const PharmacyProfile = () => {
             placeholder='Street'
             label='Street'
             type='text'
-            inputProps={{ style: { textTransform: 'capitalize' } }}
+            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
             onChange={e => setPharmacyInfo({ ...pharmacyInfo, street: e.target.value })}
             value={pharmacyInfo.pharmacy_name}
           />
@@ -372,7 +380,7 @@ const PharmacyProfile = () => {
             placeholder='NABP'
             label='NABP'
             type='text'
-            inputProps={{ style: { textTransform: 'capitalize' } }}
+            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
             onChange={e => setPharmacyInfo({ ...pharmacyInfo, nabp: e.target.value })}
             value={pharmacyInfo.pharmacy_name}
           />
@@ -387,7 +395,7 @@ const PharmacyProfile = () => {
             placeholder='City'
             label='City'
             type='text'
-            inputProps={{ style: { textTransform: 'capitalize' } }}
+            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
             onChange={e => setPharmacyInfo({ ...pharmacyInfo, city: e.target.value })}
             value={pharmacyInfo.city}
           />
@@ -402,7 +410,7 @@ const PharmacyProfile = () => {
             placeholder='NPI'
             label='NPI'
             type='text'
-            inputProps={{ style: { textTransform: 'capitalize' } }}
+            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
             onChange={e => setPharmacyInfo({ ...pharmacyInfo, npi: e.target.value })}
             value={pharmacyInfo.npi}
           />
@@ -417,7 +425,7 @@ const PharmacyProfile = () => {
             placeholder='State'
             label='State'
             type='text'
-            inputProps={{ style: { textTransform: 'capitalize' } }}
+            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
             onChange={e => setPharmacyInfo({ ...pharmacyInfo, state: e.target.value })}
             value={pharmacyInfo.state}
           />
@@ -432,7 +440,7 @@ const PharmacyProfile = () => {
             placeholder='Fax Number'
             label='Fax Number'
             type='text'
-            inputProps={{ style: { textTransform: 'capitalize' } }}
+            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
             onChange={e => setPharmacyInfo({ ...pharmacyInfo, fax: e.target.value })}
             value={pharmacyInfo.fax}
           />
@@ -447,7 +455,7 @@ const PharmacyProfile = () => {
             placeholder='Zip Code'
             label='Zip Code'
             type='text'
-            inputProps={{ style: { textTransform: 'capitalize' } }}
+            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
             onChange={e => setPharmacyInfo({ ...pharmacyInfo, zip: e.target.value })}
             value={pharmacyInfo.zip}
           />
@@ -462,7 +470,7 @@ const PharmacyProfile = () => {
             placeholder='Phone Number'
             label='Phone Number'
             type='text'
-            inputProps={{ style: { textTransform: 'capitalize' } }}
+            inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
             onChange={e => setPharmacyInfo({ ...pharmacyInfo, phone: e.target.value })}
             value={pharmacyInfo.phone}
           />
@@ -488,6 +496,28 @@ const PharmacyProfile = () => {
           <Typography variant='subtitle'>
             Will only show CBSAs that contain a zip code within 200 miles of the Pharmacy zip code
           </Typography>
+
+          <Box sx={{ mt: 7 }}>
+            <DualListBox
+              options={[
+                { value: 'Ithaca, NY', label: 'Ithaca, NY' },
+                { value: 'Kingston, NY', label: 'Kingston, NY' }
+              ]}
+              preserveSelectOrder
+              selected={selected}
+              onChange={newValue => setSelected(newValue)}
+              className='listTrasfer'
+              canFilter
+              showHeaderLabels
+              showNoOptionsText
+              icons={{
+                moveLeft: '<',
+                moveAllLeft: '<<',
+                moveRight: '>',
+                moveAllRight: '>>'
+              }}
+            />
+          </Box>
         </Grid>
 
         <Grid item xs={12} sm={12} md={12}></Grid>
@@ -498,6 +528,28 @@ const PharmacyProfile = () => {
           </Typography>
 
           <Typography variant='subtitle'>States are preloaded</Typography>
+
+          <Box sx={{ mt: 7 }}>
+            <DualListBox
+              options={[
+                { value: 'California', label: 'California' },
+                { value: 'Nevada', label: 'Nevada' }
+              ]}
+              preserveSelectOrder
+              selected={selected}
+              onChange={newValue => setSelected(newValue)}
+              className='listTrasfer'
+              canFilter
+              showHeaderLabels
+              showNoOptionsText
+              icons={{
+                moveLeft: '<',
+                moveAllLeft: '<<',
+                moveRight: '>',
+                moveAllRight: '>>'
+              }}
+            />
+          </Box>
         </Grid>
 
         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', mt: 5 }}>

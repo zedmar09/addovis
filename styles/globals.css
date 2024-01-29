@@ -53,3 +53,20 @@ code[class*='language-'] {
   font-size: 13;
   color: '#5d5a68';
 }
+
+/*REACT DUAL LIST BOX CUSTOM STYLING*/
+
+.react-dual-listbox select {
+  min-height: 300px !important;
+  background-color: #f5f5f5 !important;
+  font-size: 18px !important;
+  font-style: inherit !important;
+}
+
+.react-dual-listbox button {
+  font-size: 16px !important;
+  font-style: inherit !important;
+}
+.rdl-btn {
+  color: #072142 !important;
+}
