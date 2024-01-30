@@ -12,19 +12,19 @@ import Icon from 'src/@core/components/icon'
 const Dashboard = () => {
   return (
     <Grid container spacing={6}>
-      <Grid item lg={6} md={12} sm={12}>
+      <Grid item lg={6} md={6} sm={6} xs={6}>
         <Typography variant='h3'>Dashboard</Typography>
         <Typography>A quick data overview of the inventory.</Typography>
       </Grid>
 
-      <Grid item lg={6} md={12} sm={12} sx={{ textAlign: 'right' }}>
+      <Grid item lg={6} md={6} sm={6} xs={6} sx={{ textAlign: 'right' }}>
         <Typography variant='h6'>
           <Icon icon='emojione-v1:sun' fontSize='15' /> Good Morning
         </Typography>
         <Typography variant='subtitle2'>15 January 2024 02:15 AM</Typography>
       </Grid>
 
-      <Grid item lg={3} md={6} sm={12} sx={{ mt: 5 }}>
+      <Grid item lg={3} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
         <Card sx={{ borderRadius: 0, border: '1px solid #00a768' }}>
           <CardContent sx={{ textAlign: 'center' }}>
             <Icon icon='ph:shield-plus-duotone' fontSize='60' color='#00a768' />
@@ -39,7 +39,7 @@ const Dashboard = () => {
         </Card>
       </Grid>
 
-      <Grid item lg={3} md={6} sm={12} sx={{ mt: 5 }}>
+      <Grid item lg={3} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
         <Card sx={{ borderRadius: 0, border: '1px solid #fed600' }}>
           <CardContent sx={{ textAlign: 'center' }}>
             <Icon icon='lets-icons:money-duotone-line' fontSize='60' color='#fed600' />
@@ -54,7 +54,7 @@ const Dashboard = () => {
         </Card>
       </Grid>
 
-      <Grid item lg={3} md={6} sm={12} sx={{ mt: 5 }}>
+      <Grid item lg={3} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
         <Card sx={{ borderRadius: 0, border: '1px solid #01a9f6' }}>
           <CardContent sx={{ textAlign: 'center' }}>
             <Icon icon='icon-park-twotone:medical-box' fontSize='60' color='#01a9f6' />
@@ -69,7 +69,7 @@ const Dashboard = () => {
         </Card>
       </Grid>
 
-      <Grid item lg={3} md={6} sm={12} sx={{ mt: 5 }}>
+      <Grid item lg={3} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
         <Card sx={{ borderRadius: 0, border: '1px solid #f0483e' }}>
           <CardContent sx={{ textAlign: 'center' }}>
             <Icon icon='ic:twotone-warning' fontSize='60' color='#f0483e' />
@@ -84,7 +84,7 @@ const Dashboard = () => {
         </Card>
       </Grid>
 
-      <Grid item lg={6} md={6} sm={12} sx={{ mt: 5 }}>
+      <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
         <Card sx={{ borderRadius: 0, border: '1px solid #a3a3a3' }}>
           <CardHeader title='Inventory' />
           <Divider color='#a3a3a3' />
@@ -108,7 +108,7 @@ const Dashboard = () => {
         </Card>
       </Grid>
 
-      <Grid item lg={6} md={6} sm={12} sx={{ mt: 5 }}>
+      <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
         <Card sx={{ borderRadius: 0, border: '1px solid #a3a3a3' }}>
           <CardHeader
             title='Quick Report'
@@ -139,7 +139,7 @@ const Dashboard = () => {
         </Card>
       </Grid>
 
-      <Grid item lg={6} md={6} sm={12} sx={{ mt: 5 }}>
+      <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
         <Card sx={{ borderRadius: 0, border: '1px solid #a3a3a3' }}>
           <CardHeader title='My Pharmacy' />
           <Divider color='#a3a3a3' />
@@ -163,7 +163,7 @@ const Dashboard = () => {
         </Card>
       </Grid>
 
-      <Grid item lg={6} md={6} sm={12} sx={{ mt: 5 }}>
+      <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
         <Card sx={{ borderRadius: 0, border: '1px solid #a3a3a3' }}>
           <CardHeader title='My Pharmacy' />
           <Divider color='#a3a3a3' />
