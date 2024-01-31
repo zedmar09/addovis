@@ -24,7 +24,7 @@ const Dashboard = () => {
         <Typography variant='subtitle2'>15 January 2024 02:15 AM</Typography>
       </Grid>
 
-      <Grid item lg={3} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
+      {/* <Grid item lg={3} md={6} sm={12} xs={12} sx={{ mt: 5 }}>
         <Card sx={{ borderRadius: 0, border: '1px solid #00a768' }}>
           <CardContent sx={{ textAlign: 'center' }}>
             <Icon icon='ph:shield-plus-duotone' fontSize='60' color='#00a768' />
@@ -189,7 +189,7 @@ const Dashboard = () => {
 
       <Grid item lg={12} sx={{ textAlign: 'right' }}>
         <Button variant='contained'>Download Report</Button>
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }
