@@ -161,9 +161,7 @@ const DrugRequest = () => {
                 >
                   <Typography variant='h4'>All Drug Request</Typography>
                   <div>
-                    <StyledButton variant='contained' onClick={() => push('/coupon/add-coupon')}>
-                      Generate Report
-                    </StyledButton>
+                    <StyledButton variant='contained'>Generate Report</StyledButton>
                   </div>
                 </Box>
               </>

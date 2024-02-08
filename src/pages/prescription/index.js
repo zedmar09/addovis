@@ -124,9 +124,7 @@ const Prescription = () => {
                 >
                   <Typography variant='h4'>All Prescription</Typography>
                   <div>
-                    <StyledButton variant='contained' onClick={() => push('/coupon/add-coupon')}>
-                      Generate Report
-                    </StyledButton>
+                    <StyledButton variant='contained'>Generate Report</StyledButton>
                   </div>
                 </Box>
               </>
