@@ -1,39 +1,18 @@
-// ** React Imports
+import { signIn } from 'next-auth/react'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { styled } from '@mui/material/styles'
+import { Button, Box, Checkbox, Typography, IconButton, CardContent } from '@mui/material'
 
-// ** Next Import
 import Link from 'next/link'
-
-// ** MUI Components
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import CardContent from '@mui/material/CardContent'
-import { styled, useTheme } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import FormControlLabel from '@mui/material/FormControlLabel'
-
-// ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
-
-// ** Icon Imports
 import Icon from 'src/@core/components/icon'
-
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
+import axios from 'axios'
 
-// ** Demo Imports
-import AuthIllustrationV1Wrapper from 'src/views/pages/auth/AuthIllustrationV1Wrapper'
-import { useRouter } from 'next/router'
-
-// ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '25rem' }
 }))
@@ -51,17 +30,14 @@ const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
   backgroundColor: '#072142'
 }))
 
-const LoginV1 = () => {
+const Login = () => {
   const router = useRouter()
 
-  // ** State
   const [values, setValues] = useState({
-    password: 'sample',
+    username: '',
+    password: '',
     showPassword: false
   })
-
-  // ** Hook
-  const theme = useTheme()
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -71,9 +47,32 @@ const LoginV1 = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
 
-  const onSubmit = e => {
+  const handleLogin = async e => {
     e.preventDefault()
-    router.push('/dashboard')
+
+    const { username, password } = values
+
+    try {
+      const response = await axios.post(
+        'http://localhost/v1/addovis/auth/login',
+        { username: username, password: password },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'User-Agent': 'insomnia/8.5.1',
+            'X-Platform': 'WEB'
+          }
+        }
+      )
+      if (response.status === 200) {
+        console.log(response)
+      } else {
+        console.log('Login failed')
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      console.log('Login error')
+    }
   }
 
   return (
@@ -93,16 +92,16 @@ const LoginV1 = () => {
             Sign In
           </Typography>
 
-          <form autoComplete='off' onSubmit={onSubmit}>
+          <form autoComplete='off' onSubmit={handleLogin}>
             <CustomTextField
               required={true}
               autoFocus
               fullWidth
               id='username'
               label='Username'
+              onChange={handleChange('username')}
               sx={{ mb: 4 }}
               placeholder='Enter your Username'
-              value='sample'
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
@@ -170,6 +169,6 @@ const LoginV1 = () => {
     </Box>
   )
 }
-LoginV1.getLayout = page => <BlankLayout>{page}</BlankLayout>
+Login.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
-export default LoginV1
+export default Login
