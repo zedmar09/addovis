@@ -72,7 +72,8 @@ const UserDropdown = props => {
   }
 
   const handleLogout = () => {
-    router.push('/')
+    localStorage.clear()
+    signOut()
   }
 
   return (
@@ -115,8 +116,8 @@ const UserDropdown = props => {
               <Avatar alt='User Profile' src='/images/userThumb.jpg' sx={{ width: '2.5rem', height: '2.5rem' }} />
             </Badge>
             <Box sx={{ display: 'flex', ml: 2.5, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 500 }}>John Doe</Typography>
-              <Typography variant='body2'>Admin</Typography>
+              <Typography sx={{ fontWeight: 500, textTransform: 'capitalize' }}>Admnistrator</Typography>
+              <Typography variant='body2'>Administrator</Typography>
             </Box>
           </Box>
         </Box>

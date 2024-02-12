@@ -1,13 +1,13 @@
 import axios from 'axios'
+
 import { getSession } from 'next-auth/react'
 
 const axiosRequest = () => {
   const instance = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}/addovis`,
+    baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
     withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
-      'User-Agent': 'insomnia/8.5.1',
       'X-Platform': 'WEB'
     }
   })
@@ -16,7 +16,7 @@ const axiosRequest = () => {
     const session = await getSession()
 
     if (session?.user?.token) {
-      request.headers['Authorization'] = `Bearer ${session.user.token}`
+      request.headers['Authorization'] = `Bearer ${session?.user?.token}`
     }
 
     return request

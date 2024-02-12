@@ -1,47 +1,53 @@
-import NextAuth from 'next-auth'
+import NextAuth from 'next-auth/next'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import axios from 'axios'
+import axios from 'src/http-request/axios'
 
-export default NextAuth({
+const authOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Username and Password',
-      credentials: {
-        username: { label: 'Username', type: 'text' },
-        password: { label: 'Password', type: 'password' }
-      },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         const { username, password } = credentials
 
-        try {
-          const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_SERVER_URL}/addovis/auth/login`,
-            {
-              username,
-              password
-            },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                'User-Agent': 'insomnia/8.5.1',
-                'X-Platform': 'WEB'
-              }
-            }
-          )
+        const res = await axios.post(`auth/login/`, {
+          username: username,
+          password: password
+        })
+        const user = res.data
 
-          if (response.status === 200) {
-            const user = response.data
-
-            return user
-          } else {
-            return null
-          }
-        } catch (error) {
-          console.error('Error authenticating with backend API:', error)
-
+        if (user) {
+          return user
+        } else {
           return null
         }
       }
     })
-  ]
-})
+  ],
+  callbacks: {
+    async jwt({ token, user, account, expirationDate }) {
+      const expires = Date.now() + 60 * 60 * 1000 // 1 hour in milliseconds
+      const newExpirationDate = expirationDate || expires
+
+      return {
+        ...token,
+        ...user,
+        ...account,
+        expires: newExpirationDate
+      }
+    },
+    async session({ session, token }) {
+      session.user = token
+
+      // Check if the session is still valid by comparing the expiration time
+      const isValid = Date.now() < token.expires
+
+      if (!isValid) {
+        // If the session is expired, clear the session to initiate logout
+        return null
+      }
+
+      return session
+    }
+  }
+}
+
+export default NextAuth(authOptions)

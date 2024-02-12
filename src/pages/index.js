@@ -1,18 +1,27 @@
 import { signIn } from 'next-auth/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { styled } from '@mui/material/styles'
-import { Button, Box, Checkbox, Typography, IconButton, CardContent } from '@mui/material'
+import {
+  Button,
+  Box,
+  Checkbox,
+  Typography,
+  IconButton,
+  CardContent,
+  Alert,
+  InputAdornment,
+  FormControlLabel,
+  CircularProgress
+} from '@mui/material'
 
 import Link from 'next/link'
 import MuiCard from '@mui/material/Card'
-import InputAdornment from '@mui/material/InputAdornment'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import Icon from 'src/@core/components/icon'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
-import axios from 'axios'
 
+//customizing cards from login
 const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '25rem' }
 }))
@@ -22,6 +31,7 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: `${theme.palette.primary.light} !important`
 }))
 
+//customizing button from login
 const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
   ':hover': {
     color: 'white',
@@ -33,46 +43,48 @@ const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
 const Login = () => {
   const router = useRouter()
 
+  //verify login and identify if fetching data
+  const [isLoginError, setIsLoginError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  //storing values
   const [values, setValues] = useState({
-    username: '',
-    password: '',
+    username: 'sample',
+    password: 'sample123',
     showPassword: false
   })
 
+  //getting the values of each field
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
 
+  //displaying login
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
 
+  //assigning a timer for invalid login
+  useEffect(() => {
+    let timer
+    if (isLoginError) {
+      timer = setTimeout(() => {
+        setIsLoginError(false)
+      }, 2000)
+    }
+
+    return () => clearTimeout(timer)
+  }, [isLoginError])
+
+  //checking account credentials
   const handleLogin = async e => {
     e.preventDefault()
 
+    setIsLoading(true)
+
     const { username, password } = values
 
-    try {
-      const response = await axios.post(
-        'http://localhost/v1/addovis/auth/login',
-        { username: username, password: password },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'User-Agent': 'insomnia/8.5.1',
-            'X-Platform': 'WEB'
-          }
-        }
-      )
-      if (response.status === 200) {
-        console.log(response)
-      } else {
-        console.log('Login failed')
-      }
-    } catch (error) {
-      console.error('Login error:', error)
-      console.log('Login error')
-    }
+    router.push('/dashboard')
   }
 
   return (
@@ -88,6 +100,12 @@ const Login = () => {
             />
           </Box>
 
+          {isLoginError && (
+            <Alert severity='error' sx={{ mb: 5 }}>
+              Invalid Credentials. Please Try Again
+            </Alert>
+          )}
+
           <Typography color={'primary.light'} variant='h3' sx={{ mb: 5 }}>
             Sign In
           </Typography>
@@ -99,6 +117,7 @@ const Login = () => {
               fullWidth
               id='username'
               label='Username'
+              value={values.username}
               onChange={handleChange('username')}
               sx={{ mb: 4 }}
               placeholder='Enter your Username'
@@ -161,6 +180,7 @@ const Login = () => {
             </Box>
 
             <StyledButton variant='contained' color='primary' fullWidth type='submit'>
+              {isLoading && <CircularProgress sx={{ color: '#fff !important', mr: 4 }} size='1rem' />}
               Login
             </StyledButton>
           </form>

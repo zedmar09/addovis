@@ -1,36 +1,28 @@
-// ** React Imports
-import { useMemo, useState } from 'react'
-
-// ** MUI Imports
-import TabPanel from '@mui/lab/TabPanel'
-import TabContext from '@mui/lab/TabContext'
+import { useState } from 'react'
 import { styled } from '@mui/material/styles'
-import MuiTabList from '@mui/lab/TabList'
+import { useRouter } from 'next/router'
 import {
   Grid,
   Typography,
-  Tab,
   Button,
   FormLabel,
   FormControlLabel,
   Switch,
-  Box,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Dialog,
-  IconButton,
   Divider,
   Card,
-  CardContent
+  CardContent,
+  InputAdornment,
+  IconButton
 } from '@mui/material'
 
 // ** Custom Components Imports
 import CustomTextField from 'src/@core/components/mui/text-field'
-import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
+import cryptoRandomString from 'crypto-random-string'
+import Swal from 'sweetalert2'
 import Icon from 'src/@core/components/icon'
-import { useRouter } from 'next/router'
+import axiosClient from 'src/http-request/axios-request'
 
+//styling custom buttons
 const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
   ':hover': {
     color: 'white',
@@ -41,17 +33,35 @@ const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
 
 const AddUser = () => {
   const router = useRouter()
-  const [userInfo, setUserInfo] = useState({})
+
+  //show or hide password
+  const [showPassword, setShowPassword] = useState(true)
+
+  //handle data from user creation
+  const [userInfo, setUserInfo] = useState({
+    firstName: null,
+    lastName: null,
+    email: null,
+    username: null,
+    password: cryptoRandomString({ length: 8, type: 'alphanumeric' }),
+    passwordConfirmation: null,
+    status: null
+  })
+
+  //submitting add user information
+  const addUserSubmit = async e => {
+    e.preventDefault()
+  }
 
   return (
     <>
-      <form>
+      <form onSubmit={addUserSubmit}>
         <Card sx={{ borderRadius: 0 }}>
           <CardContent>
             <Grid container spacing={6}>
               <Grid item xs={12}>
                 <Typography variant='h4' sx={{ mb: 0 }}>
-                  Information
+                  Add User Information
                 </Typography>
               </Grid>
 
@@ -67,8 +77,8 @@ const AddUser = () => {
                   label='First Name'
                   type='text'
                   inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-                  onChange={e => setUserInfo({ ...userInfo, first_name: e.target.value })}
-                  value={userInfo.first_name}
+                  onChange={e => setUserInfo({ ...userInfo, firstName: e.target.value })}
+                  value={userInfo.firstName}
                 />
               </Grid>
 
@@ -82,8 +92,8 @@ const AddUser = () => {
                   label='Last Name'
                   type='text'
                   inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-                  onChange={e => setUserInfo({ ...userInfo, last_name: e.target.value })}
-                  value={userInfo.last_name}
+                  onChange={e => setUserInfo({ ...userInfo, lastName: e.target.value })}
+                  value={userInfo.lastName}
                 />
               </Grid>
 
@@ -95,8 +105,8 @@ const AddUser = () => {
                   size='small'
                   placeholder='Email Address'
                   label='Email Address'
-                  type='text'
-                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                  type='email'
+                  inputProps={{ style: { backgroundColor: '#f5f5f5' } }}
                   onChange={e => setUserInfo({ ...userInfo, email: e.target.value })}
                   value={userInfo.email}
                 />
@@ -123,14 +133,57 @@ const AddUser = () => {
                   placeholder='Username'
                   label='Username'
                   type='text'
-                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
+                  inputProps={{ style: { backgroundColor: '#f5f5f5' } }}
                   onChange={e => setUserInfo({ ...userInfo, username: e.target.value })}
                   value={userInfo.username}
                 />
               </Grid>
 
               <Grid item xs={12} sm={12} md={12} lg={6}>
-                <CustomTextField
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={8} lg={9}>
+                    <CustomTextField
+                      fullWidth
+                      required={true}
+                      label='Password'
+                      onChange={e => setUserInfo({ ...userInfo, password: e.target.value })}
+                      value={userInfo.password}
+                      type={showPassword ? 'text' : 'password'}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position='end'>
+                            <IconButton
+                              edge='end'
+                              onMouseDown={e => e.preventDefault()}
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              <Icon fontSize='1.25rem' icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'} />
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                        style: { backgroundColor: '#f5f5f5' }
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4} lg={3}>
+                    <Button
+                      variant='tonal'
+                      color='primary'
+                      fullWidth
+                      sx={{ mt: 5 }}
+                      onClick={() =>
+                        setUserInfo({
+                          ...userInfo,
+                          password: cryptoRandomString({ length: 8, type: 'alphanumeric' })
+                        })
+                      }
+                    >
+                      Generate
+                    </Button>
+                  </Grid>
+                </Grid>
+
+                {/* <CustomTextField
                   fullWidth
                   required={true}
                   variant='outlined'
@@ -141,7 +194,7 @@ const AddUser = () => {
                   inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
                   onChange={e => setUserInfo({ ...userInfo, password: e.target.value })}
                   value={userInfo.password}
-                />
+                /> */}
               </Grid>
             </Grid>
           </CardContent>
