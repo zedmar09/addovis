@@ -61,9 +61,10 @@ const AllPharmacy = () => {
         Cell: ({ cell, row }) => (
           <div>
             <Typography
-              sx={{ textTransform: 'capitalize', textDecoration: 'underline' }}
+              sx={{ textTransform: 'capitalize', textDecoration: 'underline', cursor: 'pointer' }}
               color={'primary.main'}
               fontWeight={450}
+              onClick={() => push('/pharmacy/update-pharmacy')}
             >
               {row.original.name}{' '}
             </Typography>

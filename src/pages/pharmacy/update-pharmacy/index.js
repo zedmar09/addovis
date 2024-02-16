@@ -34,6 +34,11 @@ import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import Icon from 'src/@core/components/icon'
 import { MaterialReactTable } from 'material-react-table'
 
+import dayjs from 'dayjs'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
+
 import 'react-dual-listbox/lib/react-dual-listbox.css'
 
 const DualListBox = dynamic(() => import('react-dual-listbox'), { ssr: false })
@@ -71,7 +76,7 @@ const StyledButton = styled(Button)(({ theme, color = 'primary' }) => ({
   backgroundColor: '#072142'
 }))
 
-const AddPharmacy = () => {
+const UpdatePharmacy = () => {
   // ** State for tabs
   const [value, setValue] = useState('1')
 
@@ -349,7 +354,7 @@ const PharmacyProfile = () => {
           <Grid container spacing={6}>
             <Grid item xs={12}>
               <Typography variant='h4' sx={{ mb: 0 }}>
-                Pharmacy Profile
+                Update Pharmacy Profile
               </Typography>
 
               <Typography variant='subtitle'>This module allows you to add pharmacy information.</Typography>
@@ -491,15 +496,34 @@ const PharmacyProfile = () => {
             </Grid>
 
             <Grid item xs={12} sm={12} md={12} lg={6}>
-              <FormLabel>
-                Status<span className='req-color'>*</span>
-              </FormLabel>
-              <br />
-              <FormControlLabel
-                control={<Switch checked={pharmacyInfo.active} />}
-                label={pharmacyInfo.active ? 'Active' : 'Inactive'}
-                onChange={e => setPharmacyInfo({ ...pharmacyInfo, active: e.target.checked })}
-              />
+              <Grid container spacing={6}>
+                <Grid item lg={5} sm={12} md={6}>
+                  <FormLabel>
+                    Status<span className='req-color'>*</span>
+                  </FormLabel>
+                  <br />
+                  <FormControlLabel
+                    control={<Switch checked={pharmacyInfo.active} />}
+                    label={pharmacyInfo.active ? 'Active' : 'Inactive'}
+                    onChange={e => setPharmacyInfo({ ...pharmacyInfo, active: e.target.checked })}
+                  />
+                </Grid>
+
+                <Grid item lg={7} sm={12} md={6}>
+                  <FormLabel>
+                    Last Outstanding Invoice Date<span className='req-color'>*</span>
+                  </FormLabel>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                      sx={{ width: '100%' }}
+                      slotProps={{ textField: { size: 'small' } }}
+                      renderInput={params => <CustomTextField {...params} />}
+                      onChange={e => setPharmacyInfo({ ...pharmacyInfo, outstanding_invoice: e })}
+                      value={pharmacyInfo?.outstanding_invoice}
+                    />
+                  </LocalizationProvider>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </CardContent>
@@ -595,4 +619,4 @@ const PharmacyProfile = () => {
   )
 }
 
-export default AddPharmacy
+export default UpdatePharmacy

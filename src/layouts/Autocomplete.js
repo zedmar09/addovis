@@ -416,7 +416,9 @@ const AutocompleteComponent = ({ hidden, settings }) => {
           <Icon fontSize='1.625rem' icon='tabler:search' />
         </IconButton>
         {!hidden && layout === 'vertical' ? (
-          <Typography sx={{ userSelect: 'none', color: 'text.disabled' }}>Search for anything here..</Typography>
+          <Typography sx={{ userSelect: 'none', color: 'text.disabled' }}>
+            Search for anything here.. <strong>(Will do this after the integration of all modules)</strong>
+          </Typography>
         ) : null}
 
         {/* noOptionsText={<NoResult value={searchValue} setOpenDialog={setOpenDialog} />} */}
@@ -520,7 +522,8 @@ const AutocompleteComponent = ({ hidden, settings }) => {
                 }}
               />
             </Box>
-            {/* {searchValue.length === 0 ? (
+
+            {searchValue.length === 0 ? (
               <Box
                 sx={{
                   p: 10,
@@ -532,9 +535,18 @@ const AutocompleteComponent = ({ hidden, settings }) => {
                   height: fullScreenDialog ? 'calc(100vh - 69px)' : '100%'
                 }}
               >
-                <DefaultSuggestions setOpenDialog={setOpenDialog} />
+                {/* <DefaultSuggestions setOpenDialog={setOpenDialog} /> */}
+                <Grid item xs={12} sx={{ textAlign: 'center' }}>
+                  <Icon icon='carbon:in-progress-error' fontSize={100} />
+                  <Typography variant='h4' fontWeight={350}>
+                    Global Search In-Progress
+                  </Typography>
+                  <Typography variant='subtitle' color={'secondary'}>
+                    We will integrate a global search once all the module is complete
+                  </Typography>
+                </Grid>
               </Box>
-            ) : null} */}
+            ) : null}
           </Dialog>
         )}
       </Box>

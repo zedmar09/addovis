@@ -20,7 +20,9 @@ import {
   DialogTitle,
   Dialog,
   IconButton,
-  FormLabel
+  FormLabel,
+  RadioGroup,
+  Radio
 } from '@mui/material'
 
 // ** Custom Components Imports
@@ -350,7 +352,7 @@ const AllDrug = () => {
           <DialogTitle id='alert-dialog-title' sx={{ backgroundColor: '#072142' }}>
             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant='h5' color={'#fff'} sx={{ mb: 2 }}>
-                Add Manufacturer
+                Add Manufacturer for Drug
               </Typography>
               <IconButton
                 aria-label='capture screenshot'
@@ -437,7 +439,26 @@ const AllDrug = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
+                <FormLabel>
+                  Authorized Generic<span className='req-color'>*</span>
+                </FormLabel>
+                <br />
+
+                <RadioGroup
+                  row
+                  aria-label='controlled'
+                  name='controlled'
+                  value={manufacturerInfo.authorized_generic}
+                  onChange={e => setManufacturerInfo({ ...manufacturerInfo, authorized_generic: e.target.value })}
+                  required={true}
+                >
+                  <FormControlLabel value='yes' control={<Radio />} label={<Typography variant='h6'>Yes</Typography>} />
+                  <FormControlLabel value='no' control={<Radio />} label={<Typography variant='h6'>No</Typography>} />
+                </RadioGroup>
+              </Grid>
+
+              <Grid item xs={12} sm={12}>
                 <FormLabel>
                   Status<span className='req-color'>*</span>
                 </FormLabel>

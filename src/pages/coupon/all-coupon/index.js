@@ -24,7 +24,6 @@ const AllManufacturer = () => {
   const rows = [
     {
       id: 1,
-      coupon_id: 'AFE4373',
       manufacturer: 'Johnson & Johnson',
       drug: 'Acetaminophen',
       bin: '234567',
@@ -35,7 +34,6 @@ const AllManufacturer = () => {
 
     {
       id: 2,
-      coupon_id: 'F1F5G6S',
       manufacturer: 'Pfizer',
       drug: 'Ibuprofen',
       bin: '3959298',
@@ -47,21 +45,6 @@ const AllManufacturer = () => {
 
   const columns = useMemo(
     () => [
-      {
-        accessorKey: 'coupon_id',
-        header: 'COUPON ID',
-        Cell: ({ cell, row }) => (
-          <div>
-            <Typography
-              sx={{ textTransform: 'capitalize', textDecoration: 'underline' }}
-              color={'primary.main'}
-              fontWeight={450}
-            >
-              {row.original.coupon_id}{' '}
-            </Typography>
-          </div>
-        )
-      },
       {
         accessorKey: 'manufacturer',
         header: 'manufacturer name',
