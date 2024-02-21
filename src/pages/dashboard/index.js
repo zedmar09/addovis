@@ -50,7 +50,19 @@ const Dashboard = () => {
 
       <Grid item lg={12}>
         <Alert severity='success' sx={{ borderRadius: 0, mt: 2 }}>
-          Here are the changes/updates of the designs <strong>February 14, 2023</strong>
+          Changes/updates of the designs <strong>February 20, 2023</strong>
+        </Alert>
+
+        <ol style={{ marginTop: 30 }}>
+          <li>
+            <strong>Pharmacy Page: </strong> Update inventory can select multiple NDC for the drug
+          </li>
+        </ol>
+      </Grid>
+
+      <Grid item lg={12}>
+        <Alert severity='success' sx={{ borderRadius: 0, mt: 2 }}>
+          Changes/updates of the designs <strong>February 14, 2023</strong>
         </Alert>
 
         <ol style={{ marginTop: 30 }}>

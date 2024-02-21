@@ -91,6 +91,26 @@ const UpdatePharmacy = () => {
 
   const [drugDetails, setDrugDetails] = useState({})
 
+  //sample object for drug
+  const dummyDrugList = [
+    { id: 1, name: 'Drug 1' },
+    { id: 2, name: 'Drug 2' },
+    { id: 3, name: 'Drug 3' },
+    { id: 4, name: 'Drug 4' },
+    { id: 5, name: 'Drug 5' },
+    { id: 6, name: 'Drug 6' }
+  ]
+
+  //sample object for drug
+  const dummyNDC = [
+    { id: 1, name: 'NDC 1' },
+    { id: 2, name: 'NDC 2' },
+    { id: 3, name: 'NDC 3' },
+    { id: 4, name: 'NDC 4' },
+    { id: 5, name: 'NDC 5' },
+    { id: 6, name: 'NDC 6' }
+  ]
+
   const rows = [
     {
       id: 1,
@@ -243,17 +263,37 @@ const UpdatePharmacy = () => {
           <DialogContent>
             <Grid container spacing={6}>
               <Grid item xs={12} sm={12} md={12} lg={6}>
-                <CustomTextField
-                  fullWidth
-                  required={true}
-                  variant='outlined'
-                  size='small'
-                  placeholder='Drug Name'
-                  label='Drug Name'
-                  type='text'
-                  inputProps={{ style: { textTransform: 'capitalize', backgroundColor: '#f5f5f5' } }}
-                  onChange={e => setDrugDetails({ ...drugDetails, drug_name: e.target.value })}
+                <FormLabel sx={{ fontSize: 13.5 }}>
+                  Select Drug<span className='req-color'>*</span>
+                </FormLabel>
+                <CustomAutocomplete
+                  options={dummyDrugList}
+                  sx={{ textTransform: 'capitalize' }}
+                  getOptionLabel={option => option.name}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
                   value={drugDetails.drug_name}
+                  renderInput={params => (
+                    <CustomTextField {...params} placeholder='Select Drug' sx={{ backgroundColor: '#f5f5f5' }} />
+                  )}
+                  onChange={(e, values) => setDrugDetails({ ...drugDetails, drug_name: values })}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={12} lg={6}>
+                <FormLabel sx={{ fontSize: 13.5 }}>
+                  Select NDC<span className='req-color'>*</span>
+                </FormLabel>
+                <CustomAutocomplete
+                  multiple
+                  options={dummyNDC}
+                  sx={{ textTransform: 'capitalize' }}
+                  getOptionLabel={option => option.name}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  value={drugDetails.ndc}
+                  renderInput={params => (
+                    <CustomTextField {...params} placeholder='Select NDC' sx={{ backgroundColor: '#f5f5f5' }} />
+                  )}
+                  onChange={(e, values) => setDrugDetails({ ...drugDetails, ndc: values })}
                 />
               </Grid>
 
@@ -287,7 +327,7 @@ const UpdatePharmacy = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} md={12} lg={6}>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
                 <CustomTextField
                   fullWidth
                   required={true}
